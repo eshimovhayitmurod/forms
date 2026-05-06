@@ -1,0 +1,95 @@
+@charset "UTF-8";
+@-ms-viewport {
+   width: device-width;
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 100;
+   src: url('./assets/fonts/Poppins-Thin.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 200;
+   src: url('./assets/fonts/Poppins-ExtraLight.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 300;
+   src: url('./assets/fonts/Poppins-Light.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 400;
+   src: url('./assets/fonts/Poppins-Regular.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 500;
+   src: url('./assets/fonts/Poppins-Medium.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 600;
+   src: url('./assets/fonts/Poppins-SemiBold.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 700;
+   src: url('./assets/fonts/Poppins-Bold.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 800;
+   src: url('./assets/fonts/Poppins-ExtraBold.woff2');
+}
+@font-face {
+   font-display: swap;
+   font-family: 'Poppins';
+   font-style: normal;
+   font-weight: 900;
+   src: url('./assets/fonts/Poppins-Black.woff2');
+}
+* {
+   box-sizing: border-box !important;
+}
+*,
+body,
+input,
+select,
+button,
+textarea,
+select {
+   font-family: 'Poppins', sans-serif !important;
+}
+::-webkit-scrollbar {
+   width: 8px;
+}
+::-webkit-scrollbar-track {
+   background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+   background-color: #3a79f3;
+   border-radius: 4px;
+}
+html {
+   scroll-behavior: smooth;
+}
+body {
+   margin: 0;
+}
