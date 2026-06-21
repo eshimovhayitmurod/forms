@@ -1,18 +1,30 @@
 import { Fragment, useState } from 'react';
 import {
+   ColorInput,
+   FileUploader,
    Label,
    MaskInput,
    NumberInput,
    PhoneInput,
+   Select,
    TextInput,
    TimeInput,
 } from './components';
+import './components/theme.css';
 import './index.css';
 import './style.css';
+const options = [
+   { label: 'Label 1', value: 1 },
+   { label: 'Label 2', value: 2 },
+   { label: 'Label 3', value: 3 },
+];
 const App = () => {
+   const [color, setColor] = useState('');
    const [count, setCount] = useState('');
+   const [files, setFiles] = useState([]);
    const [mask, setMask] = useState('');
    const [phone, setPhone] = useState('');
+   const [select, setSelect] = useState(null);
    const [text, setText] = useState('');
    const [time, setTime] = useState('');
    return (
@@ -41,6 +53,10 @@ const App = () => {
                <TextInput onChange={setText} value={text} />
             </div>
             <div className='py-2 w-75'>
+               <Label>Color input</Label>
+               <ColorInput onChange={setColor} value={color} />
+            </div>
+            <div className='py-2 w-75'>
                <Label>Time input</Label>
                <TimeInput onChange={setTime} value={time} />
             </div>
@@ -50,11 +66,19 @@ const App = () => {
             </div>
             <div className='py-2 w-75'>
                <Label>Number input</Label>
-               <NumberInput scale={12} onChange={setCount} value={count} />
+               <NumberInput onChange={setCount} value={count} />
             </div>
             <div className='py-2 w-75'>
                <Label>Mask input</Label>
                <MaskInput onChange={setMask} value={mask} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Select</Label>
+               <Select onChange={setSelect} value={select} options={options} />
+            </div>
+            <div className='py-2 w-120'>
+               <Label>File uploader</Label>
+               <FileUploader onChange={setFiles} value={files} />
             </div>
          </div>
       </Fragment>

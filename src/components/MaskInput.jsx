@@ -38,6 +38,11 @@ const types = [
       transform: value => value.replace(/ /g, ''),
       value: 'card',
    },
+   {
+      mask: [{ mask: '00 a 000 aa' }, { mask: '00 000 aaa' }],
+      transform: value => value.toUpperCase(),
+      value: 'transport-number',
+   },
 ];
 const typesList = types.map(type => type?.value);
 const MaskInput = memo(

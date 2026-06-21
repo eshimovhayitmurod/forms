@@ -1,0 +1,86 @@
+:root {
+   /* INPUT THEME */
+
+   --input-bg-color: #ffffff;
+   --input-disabled-bg-color: #f4f4f4;
+
+   --input-color: #000000;
+   --input-disabled-color: #717171;
+
+   --input-placeholder-color: #717171;
+
+   --input-border-color: #e1e1e1;
+   --input-border-focus-color: #3a79f3;
+   --input-border-error-color: #e41d32;
+
+   --input-error-message-color: #e41d32;
+
+   /* FILE UPLOADER THEME */
+
+   --file-uploader-active-bg-color: #3a79f333;
+
+   --file-uploader-main-text-color: #000000;
+   --file-uploader-subtitle-color: #949494;
+
+   --file-uploader-border-color: #e1e1e1;
+   --file-uploader-border-error-color: #e41d32;
+   --file-uploader-border-focus-color: #3a79f3;
+
+   --file-uploader-remove-text-color: #ed4c5c;
+   --file-uploader-remove-bg-color: #ed4c5c33;
+
+   /* COLOR INPUT THEME */
+
+   --color-input-bg-color: #ffffff;
+   --color-input-disabled-bg-color: #f4f4f4;
+
+   --color-input-color: #000000;
+   --color-input-disabled-color: #717171;
+
+   --color-input-placeholder-color: #717171;
+
+   --color-input-border-color: #e1e1e1;
+   --color-input-border-focus-color: #3a79f3;
+   --color-input-border-error-color: #e41d32;
+
+   --color-input-trigger-color: #808080;
+   --color-input-trigger-border-color: #e1e1e1;
+   --color-input-trigger-border-focus-color: #3a79f3;
+
+   --color-input-menu-bg-color: #ffffff;
+
+   /* SELECT THEME */
+
+   /* DATE INPUT THEME */
+
+   /* TIME INPUT THEME */
+
+   /* EDITOR THEME */
+}
+.react-colorful {
+   width: 300px !important;
+   height: 220px !important;
+}
+.react-colorful__saturation {
+   border-radius: 12px !important;
+   margin-bottom: 12px;
+   border-bottom: none;
+   cursor: all-scroll;
+}
+.react-colorful__hue {
+   height: 12px !important;
+   margin-bottom: 12px;
+   border-radius: 8px;
+   cursor: ew-resize;
+}
+.react-colorful__alpha {
+   height: 12px !important;
+   border-radius: 8px !important;
+   cursor: ew-resize;
+}
+.react-colorful__saturation-pointer,
+.react-colorful__hue-pointer,
+.react-colorful__alpha-pointer {
+   width: 20px !important;
+   height: 20px !important;
+}

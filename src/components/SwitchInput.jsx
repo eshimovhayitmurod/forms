@@ -42,7 +42,7 @@ const StyledSwitchInput = styled.div`
       display: none;
       &:checked {
          & + label {
-            background-color: #11734b;
+            background-color: #3a79f3;
             & span {
                transform: translateX(100%);
             }
@@ -52,7 +52,7 @@ const StyledSwitchInput = styled.div`
    .dark & input {
       &:checked {
          & + label {
-            background-color: #11734b;
+            background-color: #3a79f3;
          }
       }
    }
