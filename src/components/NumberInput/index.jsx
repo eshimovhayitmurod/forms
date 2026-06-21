@@ -1,6 +1,6 @@
 import { any, bool, func, number, oneOf, string } from 'prop-types';
 import { memo, useCallback, useMemo } from 'react';
-import { containerClass, errorClass, inputClass } from './classNames';
+import { containerClass, errorClass, inputClass } from '../classNames';
 import { normalizeNumberString, parseValue } from './helpers';
 const NumberInput = memo(
    ({
