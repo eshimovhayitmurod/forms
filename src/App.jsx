@@ -5,6 +5,7 @@ import {
    Label,
    MaskInput,
    NumberInput,
+   PasswordInput,
    PhoneInput,
    Select,
    TextInput,
@@ -27,6 +28,7 @@ const App = () => {
    const [select, setSelect] = useState(null);
    const [text, setText] = useState('');
    const [time, setTime] = useState('');
+   const [password, setPassword] = useState('');
    return (
       <Fragment>
          <div className='flex flex-col items-center justify-center w-full'>
@@ -53,14 +55,6 @@ const App = () => {
                <TextInput onChange={setText} value={text} />
             </div>
             <div className='py-2 w-75'>
-               <Label>Color input</Label>
-               <ColorInput onChange={setColor} value={color} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Time input</Label>
-               <TimeInput onChange={setTime} value={time} />
-            </div>
-            <div className='py-2 w-75'>
                <Label>Phone input</Label>
                <PhoneInput onChange={setPhone} value={phone} />
             </div>
@@ -71,6 +65,18 @@ const App = () => {
             <div className='py-2 w-75'>
                <Label>Mask input</Label>
                <MaskInput onChange={setMask} value={mask} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Color input</Label>
+               <ColorInput onChange={setColor} value={color} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Password input</Label>
+               <PasswordInput onChange={setPassword} value={password} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Time input</Label>
+               <TimeInput onChange={setTime} value={time} />
             </div>
             <div className='py-2 w-75'>
                <Label>Select</Label>

@@ -58,29 +58,29 @@
    /* EDITOR THEME */
 }
 .react-colorful {
-   width: 300px !important;
    height: 220px !important;
+   width: 300px !important;
 }
 .react-colorful__saturation {
+   border-bottom: none !important;
    border-radius: 12px !important;
-   margin-bottom: 12px;
-   border-bottom: none;
    cursor: all-scroll;
+   margin-bottom: 12px;
 }
 .react-colorful__hue {
-   height: 12px !important;
-   margin-bottom: 12px;
    border-radius: 8px;
    cursor: ew-resize;
+   height: 12px !important;
+   margin-bottom: 12px;
 }
 .react-colorful__alpha {
-   height: 12px !important;
    border-radius: 8px !important;
    cursor: ew-resize;
+   height: 12px !important;
 }
 .react-colorful__saturation-pointer,
 .react-colorful__hue-pointer,
 .react-colorful__alpha-pointer {
-   width: 20px !important;
    height: 20px !important;
+   width: 20px !important;
 }

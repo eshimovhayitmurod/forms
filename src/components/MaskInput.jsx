@@ -1,7 +1,7 @@
 import { bool, func, oneOf, string } from 'prop-types';
 import { memo, useMemo } from 'react';
 import { IMaskInput } from 'react-imask';
-import { containerClass, errorClass, inputClass } from './classNames';
+import { inputClass, inputContainerClass, inputErrorClass } from './classNames';
 const types = [
    {
       mask: '00000000000000000000',
@@ -60,6 +60,7 @@ const MaskInput = memo(
       value = '',
    }) => {
       const isError = !!error;
+      const classNameOptions = { size, error, disabled: isDisabled };
       const inputMode = useMemo(
          () => (type === 'passport' && value?.length < 2 ? 'latin' : 'numeric'),
          [type, value],
@@ -79,8 +80,9 @@ const MaskInput = memo(
          return mask;
       }, [newType]);
       return (
-         <div className={containerClass({ size })}>
+         <div className={inputContainerClass(classNameOptions)}>
             <IMaskInput
+               className={inputClass(classNameOptions)}
                data-cy={dataCY}
                disabled={isDisabled}
                inputMode={inputMode}
@@ -92,13 +94,10 @@ const MaskInput = memo(
                placeholder={placeholder}
                type='text'
                value={value}
-               className={inputClass({
-                  baseClass: newType + '-input',
-                  error,
-                  size,
-               })}
             />
-            {isError && <h5 className={errorClass({ size })}>{error}</h5>}
+            {isError && (
+               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+            )}
          </div>
       );
    },

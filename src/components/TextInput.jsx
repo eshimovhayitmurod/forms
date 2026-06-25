@@ -1,6 +1,6 @@
 import { bool, func, oneOf, string } from 'prop-types';
 import { memo } from 'react';
-import { containerClass, errorClass, inputClass } from './classNames';
+import { inputClass, inputContainerClass, inputErrorClass } from './classNames';
 const TextInput = memo(
    ({
       'data-cy': dataCY,
@@ -16,10 +16,11 @@ const TextInput = memo(
       value = '',
    }) => {
       const isError = !!error;
+      const classNameOptions = { size, error, disabled: isDisabled };
       return (
-         <div className={containerClass({ size })}>
+         <div className={inputContainerClass(classNameOptions)}>
             <input
-               className={inputClass({ size, error, baseClass: 'text-input' })}
+               className={inputClass(classNameOptions)}
                data-cy={dataCY}
                disabled={!!isDisabled}
                name={name}
@@ -31,7 +32,9 @@ const TextInput = memo(
                type='text'
                value={value}
             />
-            {isError && <h5 className={errorClass({ size })}>{error}</h5>}
+            {isError && (
+               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+            )}
          </div>
       );
    },

@@ -1,7 +1,7 @@
 import { bool, func, oneOf, string } from 'prop-types';
 import { memo, useState } from 'react';
 import { IMaskInput } from 'react-imask';
-import { containerClass, errorClass, inputClass } from './classNames';
+import { inputClass, inputContainerClass, inputErrorClass } from './classNames';
 const PhoneInput = memo(
    ({
       'data-cy': dataCY,
@@ -18,10 +18,11 @@ const PhoneInput = memo(
    }) => {
       const [lazy, setLazy] = useState(true);
       const isError = !!error;
+      const classNameOptions = { size, error, disabled: isDisabled };
       return (
-         <div className={containerClass({ size })}>
+         <div className={inputContainerClass(classNameOptions)}>
             <IMaskInput
-               className={inputClass({ size, error, baseClass: 'phone-input' })}
+               className={inputClass(classNameOptions)}
                data-cy={dataCY}
                disabled={!!isDisabled}
                inputMode='numeric'
@@ -52,7 +53,9 @@ const PhoneInput = memo(
                   }
                }}
             />
-            {isError && <h5 className={errorClass({ size })}>{error}</h5>}
+            {isError && (
+               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+            )}
          </div>
       );
    },

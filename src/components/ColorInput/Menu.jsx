@@ -1,6 +1,5 @@
 import { FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import { HexAlphaColorPicker } from 'react-colorful';
-import { menuClass } from './classNames';
 const Menu = ({
    context,
    floatingStyles,
@@ -20,7 +19,7 @@ const Menu = ({
             >
                <div
                   {...getFloatingProps()}
-                  className={menuClass()}
+                  className='rounded-[14px] p-3 bg-(--color-input-menu-bg-color) shadow-[0_1px_20px_0_rgba(13,46,105,0.07),0_1px_20px_0_rgba(13,46,105,0.07)]'
                   ref={refs?.setFloating}
                   style={floatingStyles}
                >

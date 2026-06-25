@@ -1,6 +1,10 @@
 import { any, bool, func, number, oneOf, string } from 'prop-types';
 import { memo, useCallback, useMemo } from 'react';
-import { containerClass, errorClass, inputClass } from '../classNames';
+import {
+   inputClass,
+   inputContainerClass,
+   inputErrorClass,
+} from '../classNames';
 import { normalizeNumberString, parseValue } from './helpers';
 const NumberInput = memo(
    ({
@@ -21,6 +25,7 @@ const NumberInput = memo(
       value = '',
    }) => {
       const isError = !!error;
+      const classNameOptions = { size, error, disabled: isDisabled };
       const memoizedValue = useMemo(() => {
          const isValid = typeof value === 'string';
          const memoizedValue = isValid ? value : String(value);
@@ -35,6 +40,7 @@ const NumberInput = memo(
       );
       const onBlurInput = useCallback(
          e => {
+            const value = e.target.value;
             const newValue = normalizeNumberString(value);
             if (value !== newValue && normalizeOnBlur) {
                onChange(newValue);
@@ -43,11 +49,12 @@ const NumberInput = memo(
                onBlur(e);
             }
          },
-         [onBlur, value, onChange, normalizeOnBlur],
+         [onBlur, onChange, normalizeOnBlur],
       );
       return (
-         <div className={containerClass({ size })}>
+         <div className={inputContainerClass(classNameOptions)}>
             <input
+               className={inputClass(classNameOptions)}
                data-cy={dataCY}
                disabled={isDisabled}
                inputMode='numeric'
@@ -59,13 +66,10 @@ const NumberInput = memo(
                ref={ref}
                type='text'
                value={memoizedValue}
-               className={inputClass({
-                  baseClass: 'number-input',
-                  error,
-                  size,
-               })}
             />
-            {isError && <h5 className={errorClass({ size })}>{error}</h5>}
+            {isError && (
+               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+            )}
          </div>
       );
    },
