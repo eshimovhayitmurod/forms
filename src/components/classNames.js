@@ -31,6 +31,28 @@ export const inputErrorClass = ({ size = 'md' }) => {
    });
 };
 
+// OTP INPUT
+
+export const otpInputClass = ({ disabled = false, error = false, size }) => {
+   return clsx(
+      'rounded-[10px] border-2 border-solid text-[18px] font-semibold outline-none m-0 p-0',
+
+      'bg-(--input-bg-color) disabled:bg-(--input-disabled-bg-color)',
+
+      'text-(--input-color) disabled:text-(--input-disabled-color)',
+
+      'border-(--color-input-border-color)',
+      { 'border-(--color-input-border-error-color)': error && !disabled },
+      { 'hover:border-(--color-input-border-focus-color)': !disabled },
+      'focus:border-(--color-input-border-focus-color)',
+      {
+         'h-12 w-10!': !size || size === 'md',
+         'h-11 w-9!': size === 'sm',
+         'h-13 w-11!': size === 'lg',
+      },
+   );
+};
+
 // DROPDOWN
 
 export const dropdownContainerClass = ({

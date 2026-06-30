@@ -5,6 +5,7 @@ import {
    Label,
    MaskInput,
    NumberInput,
+   OTPInput,
    PasswordInput,
    PhoneInput,
    Select,
@@ -24,11 +25,12 @@ const App = () => {
    const [count, setCount] = useState('');
    const [files, setFiles] = useState([]);
    const [mask, setMask] = useState('');
+   const [otp, setOTP] = useState('');
+   const [password, setPassword] = useState('');
    const [phone, setPhone] = useState('');
    const [select, setSelect] = useState(null);
    const [text, setText] = useState('');
    const [time, setTime] = useState('');
-   const [password, setPassword] = useState('');
    return (
       <Fragment>
          <div className='flex flex-col items-center justify-center w-full'>
@@ -49,6 +51,10 @@ const App = () => {
          <div className='flex flex-col items-center justify-center w-full'>
             <div className='text-[24px] font-semibold mt-6 mb-2 w-75'>
                Inputs
+            </div>
+            <div className='py-2 w-75'>
+               <Label>OTP input</Label>
+               <OTPInput onChange={setOTP} value={otp} />
             </div>
             <div className='py-2 w-75'>
                <Label>Text input</Label>
