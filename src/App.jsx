@@ -9,6 +9,7 @@ import {
    PasswordInput,
    PhoneInput,
    Select,
+   StarsInput,
    Textarea,
    TextInput,
    TimeInput,
@@ -30,6 +31,7 @@ const App = () => {
    const [password, setPassword] = useState('');
    const [phone, setPhone] = useState('');
    const [select, setSelect] = useState(null);
+   const [stars, setStars] = useState(0);
    const [text, setText] = useState('');
    const [textarea, setTextarea] = useState('');
    const [time, setTime] = useState('');
@@ -57,6 +59,10 @@ const App = () => {
             <div className='py-2 w-75'>
                <Label>Textarea input</Label>
                <Textarea onChange={setTextarea} value={textarea} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Stars input</Label>
+               <StarsInput onChange={setStars} value={stars} />
             </div>
             <div className='py-2 w-75'>
                <Label>OTP input</Label>

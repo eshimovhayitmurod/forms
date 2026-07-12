@@ -7,6 +7,7 @@ export { default as OTPInput } from './OTPInput';
 export { default as PasswordInput } from './PasswordInput';
 export { default as PhoneInput } from './PhoneInput';
 export { default as Select } from './Select';
+export { default as StarsInput } from './StarsInput';
 export { default as Textarea } from './Textarea';
 export { default as TextInput } from './TextInput';
 export { default as TimeInput } from './TimeInput';
