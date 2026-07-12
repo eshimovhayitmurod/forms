@@ -7,7 +7,7 @@ export const inputContainerClass = () => {
 };
 export const inputClass = ({ size = 'md', error = '' }) => {
    return clsx(
-      'w-full font-medium outline-none border-2',
+      'w-full block font-medium outline-none border-2 border-solid',
       'bg-(--input-bg-color) disabled:bg-(--input-disabled-bg-color)',
       'text-(--input-color) disabled:text-(--input-disabled-color)',
       'placeholder:text-(--input-placeholder-color)',
@@ -18,6 +18,24 @@ export const inputClass = ({ size = 'md', error = '' }) => {
          'h-11 px-3.75 text-[16px] rounded-[10px]': !size || size === 'md',
          'h-12 px-4.5 text-[18px] rounded-[10px]': size === 'lg',
          'h-10 px-3 text-[15px] rounded-[9px]': size === 'sm',
+         'border-(--input-border-error-color)': !!error,
+         'border-(--input-border-color)': !error,
+      },
+   );
+};
+export const textareaClass = ({ size = 'md', error = '' }) => {
+   return clsx(
+      'w-full block font-medium outline-none border-2 border-solid field-sizing-content resize-none max-h-[350px] py-[10px] pr-[10px] pl-[17px]',
+      'bg-(--input-bg-color) disabled:bg-(--input-disabled-bg-color)',
+      'text-(--input-color) disabled:text-(--input-disabled-color)',
+      'placeholder:text-(--input-placeholder-color)',
+      'hover:not-disabled:border-(--input-border-focus-color)',
+      'focus:not-disabled:border-(--input-border-focus-color)',
+      'disabled:cursor-default',
+      {
+         'min-h-[95px] text-[16px] rounded-[10px]': !size || size === 'md',
+         'min-h-[105px] text-[18px] rounded-[10px]': size === 'lg',
+         'min-h-[91px] text-[15px] rounded-[9px]': size === 'sm',
          'border-(--input-border-error-color)': !!error,
          'border-(--input-border-color)': !error,
       },

@@ -4,7 +4,7 @@ import ReactOtpInput from 'react-otp-input';
 import { inputErrorClass, otpInputClass } from './classNames';
 const OTPInput = memo(
    ({
-      autoFocus = true,
+      autoFocus = false,
       error,
       isDisabled = false,
       length = 5,

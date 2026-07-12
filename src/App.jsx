@@ -9,6 +9,7 @@ import {
    PasswordInput,
    PhoneInput,
    Select,
+   Textarea,
    TextInput,
    TimeInput,
 } from './components';
@@ -30,6 +31,7 @@ const App = () => {
    const [phone, setPhone] = useState('');
    const [select, setSelect] = useState(null);
    const [text, setText] = useState('');
+   const [textarea, setTextarea] = useState('');
    const [time, setTime] = useState('');
    return (
       <Fragment>
@@ -51,6 +53,10 @@ const App = () => {
          <div className='flex flex-col items-center justify-center w-full'>
             <div className='text-[24px] font-semibold mt-6 mb-2 w-75'>
                Inputs
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Textarea input</Label>
+               <Textarea onChange={setTextarea} value={textarea} />
             </div>
             <div className='py-2 w-75'>
                <Label>OTP input</Label>
