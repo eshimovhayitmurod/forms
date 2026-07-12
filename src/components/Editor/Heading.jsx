@@ -10,48 +10,15 @@ import {
    useTransitionStyles,
 } from '@floating-ui/react';
 import { Fragment, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 const options = [
-   {
-      level: 1,
-      label_en: 'Heading 1',
-      label_ru: 'Заголовок 1',
-      label_uz: 'Sarlavha 1',
-   },
-   {
-      level: 2,
-      label_en: 'Heading 2',
-      label_ru: 'Заголовок 2',
-      label_uz: 'Sarlavha 2',
-   },
-   {
-      level: 3,
-      label_en: 'Heading 3',
-      label_ru: 'Заголовок 3',
-      label_uz: 'Sarlavha 3',
-   },
-   {
-      level: 4,
-      label_en: 'Heading 4',
-      label_ru: 'Заголовок 4',
-      label_uz: 'Sarlavha 4',
-   },
-   {
-      level: 5,
-      label_en: 'Heading 5',
-      label_ru: 'Заголовок 5',
-      label_uz: 'Sarlavha 5',
-   },
-   {
-      level: 6,
-      label_en: 'Heading 6',
-      label_ru: 'Заголовок 6',
-      label_uz: 'Sarlavha 6',
-   },
+   { level: 1, label: 'Heading 1' },
+   { level: 2, label: 'Heading 2' },
+   { level: 3, label: 'Heading 3' },
+   { level: 4, label: 'Heading 4' },
+   { level: 5, label: 'Heading 5' },
+   { level: 6, label: 'Heading 6' },
 ];
 const Heading = ({ editor, isDisabled = false }) => {
-   const translation = useTranslation();
-   const language = translation?.i18n?.language;
    const listRef = useRef([]);
    const [activeIndex, setActiveIndex] = useState(0);
    const [open, setOpen] = useState(false);
@@ -67,14 +34,8 @@ const Heading = ({ editor, isDisabled = false }) => {
    const { styles, isMounted } = useTransitionStyles(context, {
       common: { transformOrigin: 'top center' },
       duration: 300,
-      initial: {
-         opacity: 0,
-         transform: 'scale(0.7)',
-      },
-      open: {
-         opacity: 1,
-         transform: 'scale(1)',
-      },
+      initial: { opacity: 0, transform: 'scale(0.7)' },
+      open: { opacity: 1, transform: 'scale(1)' },
    });
    const click = useClick(context, { enabled: !isDisabled });
    const dismiss = useDismiss(context);
@@ -95,19 +56,15 @@ const Heading = ({ editor, isDisabled = false }) => {
             {...getReferenceProps()}
             aria-expanded={open}
             aria-haspopup='listbox'
-            className='[&:not(:disabled)]:hover:bg-[#f1f1f1] [&:not(:disabled)]:dark:hover:bg-[#222222] data-[active=true]:bg-[#e2e2e2] dark:data-[active=true]:bg-[#222222] disabled:bg-transparent text-[#292b32] dark:text-[#f2f2f2] rounded-[10px] cursor-pointer items-center flex text-[14px] font-medium outline-none border-none pl-2.5 pr-0.5'
+            className='not-disabled:hover:bg-[#f1f1f1] data-[active=true]:bg-[#e2e2e2] disabled:bg-transparent text-[#292b32] rounded-[10px] cursor-pointer items-center flex text-[14px] font-medium outline-none border-none pl-2.5 pr-0.5'
             data-active={!!editor.isActive('heading')}
             disabled={isDisabled}
-            ref={refs.setReference}
             type='button'
+            ref={node => {
+               refs.setReference(node);
+            }}
          >
-            <span>
-               {language === 'en'
-                  ? 'Heading'
-                  : language === 'ru'
-                    ? 'Заголовок'
-                    : 'Sarlavha'}
-            </span>
+            <span>Heading</span>
             <span className='dropdown-icon'>
                <svg fill='none' height='24' viewBox='0 0 25 24' width='25'>
                   <path
@@ -130,12 +87,14 @@ const Heading = ({ editor, isDisabled = false }) => {
                   <div
                      {...getFloatingProps()}
                      className='outline-none'
-                     ref={refs.setFloating}
                      style={floatingStyles}
                      tabIndex={-1}
+                     ref={node => {
+                        refs.setFloating(node);
+                     }}
                   >
                      <div
-                        className='main-bg-color backdrop-blur-[5px] p-1 shadow-[0_0_20px_rgba(0,0,0,0.08)] rounded-[15px] overflow-hidden'
+                        className='bg-[#ffffff] backdrop-blur-[5px] p-1 shadow-[0_0_20px_rgba(0,0,0,0.08)] rounded-[15px] overflow-hidden'
                         style={styles}
                      >
                         {options.map((heading, index) => (
@@ -156,13 +115,13 @@ const Heading = ({ editor, isDisabled = false }) => {
                                  },
                               })}
                               aria-selected={false}
-                              className='w-full px-3 hover:bg-[#f1f5f9] hover:dark:bg-[#4b4b4b] hover:text-[#11734b] focus:bg-[#f1f5f9] focus:dark:bg-[#4b4b4b] focus:text-[#11734b] rounded-xl cursor-pointer text-[15px] text-[#292B32] dark:text-[#FFFFFF] font-regular outline-none border-none h-9 flex items-center'
+                              className='w-full px-3 hover:bg-[#f1f5f9] hover:text-[#11734b] focus:bg-[#f1f5f9] focus:text-[#11734b] rounded-xl cursor-pointer text-[15px] text-[#292B32] font-regular outline-none border-none h-9 flex items-center'
                               key={index}
                               ref={node => (listRef.current[index] = node)}
                               role='option'
                               tabIndex={-1}
                            >
-                              {heading?.['label_' + language]}
+                              {heading?.label}
                            </button>
                         ))}
                      </div>

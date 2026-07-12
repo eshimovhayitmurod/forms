@@ -1,4 +1,5 @@
 export { default as ColorInput } from './ColorInput';
+export { default as Editor } from './Editor';
 export { default as FileUploader } from './FileUploader';
 export { default as Label } from './Label';
 export { default as MaskInput } from './MaskInput';

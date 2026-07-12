@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import {
    ColorInput,
+   Editor,
    FileUploader,
    Label,
    MaskInput,
@@ -25,6 +26,7 @@ const options = [
 const App = () => {
    const [color, setColor] = useState('');
    const [count, setCount] = useState('');
+   const [editor, setEditor] = useState('');
    const [files, setFiles] = useState([]);
    const [mask, setMask] = useState('');
    const [otp, setOTP] = useState('');
@@ -55,6 +57,10 @@ const App = () => {
          <div className='flex flex-col items-center justify-center w-full'>
             <div className='text-[24px] font-semibold mt-6 mb-2 w-75'>
                Inputs
+            </div>
+            <div className='py-2 w-180'>
+               <Label>Editor</Label>
+               <Editor onChange={setEditor} value={editor} />
             </div>
             <div className='py-2 w-75'>
                <Label>Textarea input</Label>

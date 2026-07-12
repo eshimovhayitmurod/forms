@@ -1,4 +1,3 @@
-import sanitizeHtml from '@shared/helpers/sanitizeHtml';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import Subscript from '@tiptap/extension-subscript';
@@ -6,7 +5,9 @@ import Superscript from '@tiptap/extension-superscript';
 import TextAlign from '@tiptap/extension-text-align';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { bool, func, string } from 'prop-types';
 import styled from 'styled-components';
+import sanitizeHtml from './sanitizeHtml';
 import Toolbar from './Toolbar';
 const StyledEditor = styled.div`
    border-radius: 10px;
@@ -16,7 +17,7 @@ const StyledEditor = styled.div`
       /* height: 350px; */
       background-color: transparent;
       border-radius: 0 0 10px 10px;
-      border: 1px solid;
+      border: 2px solid;
       border-color: #dedede;
       field-sizing: content;
       max-height: 500px;
@@ -28,22 +29,10 @@ const StyledEditor = styled.div`
          border-color: #e41d32;
       }
       &:focus:not([contenteditable='false']) {
-         border-color: #11734b;
+         border-color: #3a79f3;
       }
       &[contenteditable='false'] {
          background-color: #f4f4f4;
-      }
-   }
-   .dark & .ProseMirror {
-      border-color: #555555;
-      &[data-error='true']:not([contenteditable='false']) {
-         border-color: #e41d32;
-      }
-      &:focus:not([contenteditable='false']) {
-         border-color: #11734b;
-      }
-      &[contenteditable='false'] {
-         background-color: #2e2d2d;
       }
    }
    .ProseMirror * {
@@ -103,5 +92,14 @@ const Editor = ({
          <EditorContent editor={editor} />
       </StyledEditor>
    );
+};
+Editor.propTypes = {
+   'data-cy': string,
+   isDisabled: bool,
+   isError: bool,
+   onBlur: func,
+   onChange: func,
+   placeholder: string,
+   value: string,
 };
 export default Editor;

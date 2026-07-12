@@ -1,6 +1,4 @@
-import { Tooltip } from '@shared/components/Overlay';
 import { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Heading from './Heading';
 import Bold from './Icons/Bold';
@@ -18,15 +16,16 @@ import SubScript from './Icons/SubScript';
 import SuperScript from './Icons/SuperScript';
 import UnderLine from './Icons/Underline';
 import Undo from './Icons/Undo';
+import Tooltip from './Tooltip';
 const StyledToolbar = styled.div`
    border-left-color: #dedede;
-   border-left-width: 1px;
+   border-left-width: 2px;
    border-radius: 10px 10px 0 0;
    border-right-color: #dedede;
-   border-right-width: 1px;
+   border-right-width: 2px;
    border-style: solid;
    border-top-color: #dedede;
-   border-top-width: 1px;
+   border-top-width: 2px;
    display: flex;
    flex-wrap: wrap;
    gap: 5px;
@@ -43,9 +42,6 @@ const StyledToolbar = styled.div`
          right: -3px;
          top: 2px;
          width: 1px;
-      }
-      .dark &:not(:last-child):before {
-         background-color: #555555;
       }
       & .editor-toolbar-btn {
          background-color: transparent;
@@ -68,26 +64,9 @@ const StyledToolbar = styled.div`
             cursor: default;
          }
       }
-      .dark & .editor-toolbar-btn {
-         background-color: transparent !important;
-         color: #ffffff !important;
-         &[data-active='true'] {
-            background-color: #222222 !important;
-         }
-         &:hover:not(:disabled) {
-            background-color: #222222 !important;
-         }
-      }
-   }
-   .dark & {
-      border-left-color: #555555;
-      border-right-color: #555555;
-      border-top-color: #555555;
    }
 `;
 const Toolbar = ({ editor, isDisabled = false }) => {
-   const translation = useTranslation();
-   const language = translation?.i18n?.language;
    if (!editor) return null;
    const toolGroups = [
       {
@@ -96,17 +75,13 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                action: () => editor.chain().focus().undo().run(),
                active: false,
                icon: <Undo />,
-               title_en: 'Undo',
-               title_ru: 'Отменить',
-               title_uz: 'Bekor qilish',
+               title: 'Undo',
             },
             {
                action: () => editor.chain().focus().redo().run(),
                active: false,
                icon: <Redo />,
-               title_en: 'Redo',
-               title_ru: 'Повторить',
-               title_uz: 'Qayta bajarish',
+               title: 'Redo',
             },
          ],
       },
@@ -120,17 +95,13 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                action: () => editor.chain().focus().toggleBulletList().run(),
                active: 'bulletList',
                icon: <BulletList />,
-               title_en: 'Bullet List',
-               title_ru: 'Маркированный список',
-               title_uz: 'Belgili ro‘yxat',
+               title: 'Bullet List',
             },
             {
                action: () => editor.chain().focus().toggleOrderedList().run(),
                active: 'orderedList',
                icon: <OrderedList />,
-               title_en: 'Ordered List',
-               title_ru: 'Нумерованный список',
-               title_uz: 'Tartiblangan ro‘yxat',
+               title: 'Ordered List',
             },
          ],
       },
@@ -140,41 +111,31 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                action: () => editor.chain().focus().toggleBold().run(),
                active: 'bold',
                icon: <Bold />,
-               title_en: 'Bold',
-               title_ru: 'Жирный',
-               title_uz: 'Qalin',
+               title: 'Bold',
             },
             {
                action: () => editor.chain().focus().toggleItalic().run(),
                active: 'italic',
                icon: <Italic />,
-               title_en: 'Italic',
-               title_ru: 'Курсив',
-               title_uz: 'Kursiv',
+               title: 'Italic',
             },
             {
                action: () => editor.chain().focus().toggleUnderline().run(),
                active: 'underline',
                icon: <UnderLine />,
-               title_en: 'Underline',
-               title_ru: 'Подчёркнутый',
-               title_uz: 'Tagiga chizilgan',
+               title: 'Underline',
             },
             {
                action: () => editor.chain().focus().toggleStrike().run(),
                active: 'strike',
                icon: <Strike />,
-               title_en: 'Strike',
-               title_ru: 'Зачёркнутый',
-               title_uz: 'Ustidan chizilgan',
+               title: 'Strike',
             },
             {
                action: () => editor.chain().focus().toggleHighlight().run(),
                active: 'highlight',
                icon: <HighLight />,
-               title_en: 'Highlight',
-               title_ru: 'Выделение',
-               title_uz: 'Ajratish',
+               title: 'Highlight',
             },
          ],
       },
@@ -184,17 +145,13 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                action: () => editor.chain().focus().toggleSubscript().run(),
                active: 'subscript',
                icon: <SubScript />,
-               title_en: 'Subscript',
-               title_ru: 'Нижний индекс',
-               title_uz: 'Pastki indeks',
+               title: 'Subscript',
             },
             {
                action: () => editor.chain().focus().toggleSuperscript().run(),
                active: 'superscript',
                icon: <SuperScript />,
-               title_en: 'SuperScript',
-               title_ru: 'Верхний индекс',
-               title_uz: 'Yuqori indeks',
+               title: 'SuperScript',
             },
          ],
       },
@@ -204,35 +161,27 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                action: () => editor.chain().focus().setTextAlign('left').run(),
                active: { textAlign: 'left' },
                icon: <Left />,
-               title_en: 'Left',
-               title_ru: 'По левому краю',
-               title_uz: 'Chapga',
+               title: 'Left',
             },
             {
                action: () =>
                   editor.chain().focus().setTextAlign('center').run(),
                active: { textAlign: 'center' },
                icon: <Center />,
-               title_en: 'Center',
-               title_ru: 'По центру',
-               title_uz: 'Markazga',
+               title: 'Center',
             },
             {
                action: () => editor.chain().focus().setTextAlign('right').run(),
                active: { textAlign: 'right' },
                icon: <Right />,
-               title_en: 'Right',
-               title_ru: 'По правому краю',
-               title_uz: 'O‘ngga',
+               title: 'Right',
             },
             {
                action: () =>
                   editor.chain().focus().setTextAlign('justify').run(),
                active: { textAlign: 'justify' },
                icon: <Justify />,
-               title_en: 'Justify',
-               title_ru: 'По ширине',
-               title_uz: 'To‘liq tekislash',
+               title: 'Justify',
             },
          ],
       },
@@ -250,7 +199,7 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                      <Tooltip
                         isDisabled={isDisabled}
                         key={`${index}_${subIndex}`}
-                        title={btn?.['title_' + language]}
+                        title={btn?.title}
                      >
                         <button
                            disabled={isDisabled}
