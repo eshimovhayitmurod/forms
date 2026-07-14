@@ -23,21 +23,17 @@ const Control = ({
    return (
       <div
          className={dropdownContainerClass(classNameOptions)}
-         data-disabled={isDisabled}
-         data-error={!!error}
-         onFocus={onFocus}
          ref={refs?.setReference}
       >
          <IMaskInput
             className={dropdownInputClass(classNameOptions)}
-            data-error={!!error}
-            data-size={size}
             disabled={isDisabled}
             inputRef={ref}
             lazy={true}
             mask='#HHHHHHHH'
             name={name}
             onAccept={onChange}
+            onFocus={onFocus}
             overwrite={true}
             placeholder={placeholder}
             value={value}

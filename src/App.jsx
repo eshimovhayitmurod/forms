@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import {
    ColorInput,
+   DateInput,
    Editor,
    FileUploader,
    Label,
@@ -26,6 +27,7 @@ const options = [
 const App = () => {
    const [color, setColor] = useState('');
    const [count, setCount] = useState('');
+   const [date, setDate] = useState('');
    const [editor, setEditor] = useState('');
    const [files, setFiles] = useState([]);
    const [mask, setMask] = useState('');
@@ -57,6 +59,10 @@ const App = () => {
          <div className='flex flex-col items-center justify-center w-full'>
             <div className='text-[24px] font-semibold mt-6 mb-2 w-75'>
                Inputs
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Date input</Label>
+               <DateInput onChange={setDate} value={date} />
             </div>
             <div className='py-2 w-180'>
                <Label>Editor</Label>

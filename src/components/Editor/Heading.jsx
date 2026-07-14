@@ -115,7 +115,7 @@ const Heading = ({ editor, isDisabled = false }) => {
                                  },
                               })}
                               aria-selected={false}
-                              className='w-full px-3 hover:bg-[#f1f5f9] hover:text-[#11734b] focus:bg-[#f1f5f9] focus:text-[#11734b] rounded-xl cursor-pointer text-[15px] text-[#292B32] font-regular outline-none border-none h-9 flex items-center'
+                              className='w-full px-3 hover:bg-[#f1f5f9] hover:text-[#3a79f3] focus:bg-[#f1f5f9] focus:text-[#3a79f3] rounded-xl cursor-pointer text-[14px] text-[#292B32] font-medium outline-none border-none h-9 flex items-center'
                               key={index}
                               ref={node => (listRef.current[index] = node)}
                               role='option'
