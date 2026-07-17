@@ -5,46 +5,14 @@ import Superscript from '@tiptap/extension-superscript';
 import TextAlign from '@tiptap/extension-text-align';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import clsx from 'clsx';
 import { bool, func, string } from 'prop-types';
-import styled from 'styled-components';
 import sanitizeHtml from './sanitizeHtml';
 import Toolbar from './Toolbar';
-const StyledEditor = styled.div`
-   border-radius: 10px;
-   overflow: hidden;
-   width: 100%;
-   .ProseMirror {
-      /* height: 350px; */
-      background-color: transparent;
-      border-radius: 0 0 10px 10px;
-      border: 2px solid;
-      border-color: #dedede;
-      field-sizing: content;
-      max-height: 500px;
-      min-height: 94px;
-      outline: none;
-      overflow-y: auto;
-      padding: 10px;
-      &[data-error='true']:not([contenteditable='false']) {
-         border-color: #e41d32;
-      }
-      &:focus:not([contenteditable='false']) {
-         border-color: #3a79f3;
-      }
-      &[contenteditable='false'] {
-         background-color: #f4f4f4;
-      }
-   }
-   .ProseMirror * {
-      all: revert;
-      color: #000000 !important;
-      isolation: isolate;
-   }
-`;
 const Editor = ({
    'data-cy': dataCY,
    isDisabled = false,
-   isError = false,
+   error = 'djnewo',
    onBlur,
    onChange,
    onFocus,
@@ -77,7 +45,7 @@ const Editor = ({
       ],
       editorProps: {
          editable: () => !isDisabled,
-         attributes: { 'data-cy': dataCY, 'data-error': !!isError },
+         attributes: { 'data-cy': dataCY, 'data-error': !!error },
          transformPastedHTML(html) {
             const cleanHtml = sanitizeHtml(html);
             return cleanHtml;
@@ -85,12 +53,31 @@ const Editor = ({
       },
    });
    return (
-      <StyledEditor>
+      <div
+         className={clsx(
+            // ELEMENT STYLES
+            'rounded-[10px] overflow-hidden w-full',
+            // PROSE MIRROR STYLES
+            '[&_.ProseMirror]:p-2.5 [&_.ProseMirror]:border-2 [&_.ProseMirror]:rounded-b-[10px] [&_.ProseMirror]:field-sizing:content [&_.ProseMirror]:max-h-125 [&_.ProseMirror]:min-h-23.5 [&_.ProseMirror]:outline-none [&_.ProseMirror]:overflow-y-auto [&_.ProseMirror_*]:[all:revert] [&_.ProseMirror_*]:isolate',
+            // PROSE MIRROR BACKGROUND
+            '[&_.ProseMirror]:bg-transparent',
+            `[&_.ProseMirror[contenteditable='false']]:bg-[#f4f4f4]`,
+            // PROSE MIRROR COLOR
+            '[&_.ProseMirror_*]:[!color:#000000]',
+            // PROSE MIRROR BORDER COLOR
+            '[&_.ProseMirror]:border-[#dedede]',
+            `[&_.ProseMirror:focus:not([contenteditable='false'])]:border-[#3a79f3] [&_.ProseMirror:hover:not([contenteditable='false'])]:border-[#3a79f3]`,
+            {
+               "[&_.ProseMirror:not([contenteditable='false'])]:border-[#e41d32]":
+                  !!error,
+            },
+         )}
+      >
          <div>
             <Toolbar isDisabled={!!isDisabled} editor={editor} />
          </div>
          <EditorContent editor={editor} />
-      </StyledEditor>
+      </div>
    );
 };
 Editor.propTypes = {

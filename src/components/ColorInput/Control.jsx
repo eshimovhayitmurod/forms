@@ -56,17 +56,15 @@ const Control = ({
             }}
          />
          <div className={dropdownTriggerClass(classNameOptions)}>
-            <button
+            <div
                {...getReferenceProps()}
-               disabled={isDisabled}
                className={dropdownTriggerIconClass(classNameOptions)}
-               type='button'
             >
                <div
                   className='border-2 w-5 h-5 rounded-lg border-(--color-input-trigger-border-color)'
                   style={{ backgroundColor: value }}
                />
-            </button>
+            </div>
          </div>
       </div>
    );

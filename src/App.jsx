@@ -60,10 +60,6 @@ const App = () => {
             <div className='text-[24px] font-semibold mt-6 mb-2 w-75'>
                Inputs
             </div>
-            <div className='py-2 w-75'>
-               <Label>Date input</Label>
-               <DateInput onChange={setDate} value={date} />
-            </div>
             <div className='py-2 w-180'>
                <Label>Editor</Label>
                <Editor onChange={setEditor} value={editor} />
@@ -95,6 +91,10 @@ const App = () => {
             <div className='py-2 w-75'>
                <Label>Mask input</Label>
                <MaskInput onChange={setMask} value={mask} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Date input</Label>
+               <DateInput onChange={setDate} value={date} />
             </div>
             <div className='py-2 w-75'>
                <Label>Color input</Label>

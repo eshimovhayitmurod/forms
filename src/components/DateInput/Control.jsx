@@ -94,14 +94,12 @@ const Control = ({
             }}
          />
          <div className={dropdownTriggerClass(classNameOptions)}>
-            <button
+            <div
                {...getReferenceProps()}
-               disabled={isDisabled}
                className={dropdownTriggerIconClass(classNameOptions)}
-               type='button'
             >
                <Down />
-            </button>
+            </div>
          </div>
       </div>
    );
