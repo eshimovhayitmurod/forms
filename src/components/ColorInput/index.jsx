@@ -1,21 +1,28 @@
-import { any, bool, func, string } from 'prop-types';
+import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
 import { Fragment, memo } from 'react';
 import Control from './Control';
 import Menu from './Menu';
 import useDropdown from './useDropdown';
 const ColorInput = memo(
    ({
+      'aria-label': ariaLabel,
       'data-cy': dataCY,
-      error = false,
-      isDisabled = false,
+      containerClassName = '',
+      disabled = false,
+      dropdownContainerClassName = '',
+      dropdownInputClassName = '',
+      dropdownTriggerClassName = '',
+      dropdownTriggerIconClassName = '',
+      error = '',
+      errorClassName = '',
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
+      ref,
       size = 'md',
       value,
-      ref,
    }) => {
       const {
          context,
@@ -24,16 +31,21 @@ const ColorInput = memo(
          getReferenceProps,
          open,
          refs,
-      } = useDropdown({
-         isDisabled,
-      });
+      } = useDropdown({ disabled });
       return (
          <Fragment>
             <Control
+               ariaLabel={ariaLabel}
+               containerClassName={containerClassName}
                dataCY={dataCY}
+               disabled={disabled}
+               dropdownContainerClassName={dropdownContainerClassName}
+               dropdownInputClassName={dropdownInputClassName}
+               dropdownTriggerClassName={dropdownTriggerClassName}
+               dropdownTriggerIconClassName={dropdownTriggerIconClassName}
                error={error}
+               errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
-               isDisabled={isDisabled}
                name={name}
                onBlur={onBlur}
                onChange={onChange}
@@ -58,12 +70,23 @@ const ColorInput = memo(
    },
 );
 ColorInput.propTypes = {
-   isDisabled: bool,
-   error: bool,
+   'aria-label': string,
+   'data-cy': string,
+   containerClassName: string,
+   disabled: bool,
+   dropdownContainerClassName: string,
+   dropdownInputClassName: string,
+   dropdownTriggerClassName: string,
+   dropdownTriggerIconClassName: string,
+   error: string,
+   errorClassName: string,
+   name: string,
+   onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
+   ref: oneOfType([func, shape({ current: any })]),
+   size: oneOf(['sm', 'md', 'lg']),
    value: any,
-   name: string,
 };
 export default ColorInput;

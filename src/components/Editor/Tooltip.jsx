@@ -48,7 +48,7 @@ const Tooltip = ({
             <FloatingPortal id='floating-ui-portal'>
                <div
                   {...getFloatingProps()}
-                  className='bg-[#ffffff] text-[#272727] rounded-[10px] text-[13px] font-medium py-1.5 px-3 whitespace-pre-line w-max max-w-75 z-50 shadow-[0_0_20px_2px_rgba(0,0,0,0.12)]'
+                  className='bg-[#141414] text-[#f2f2f2] rounded-[10px] text-[13px] font-medium py-1.5 px-3 whitespace-pre-line w-max max-w-75 z-50 shadow-[0_0_20px_2px_rgba(0,0,0,0.12)]'
                   ref={node => refs.setFloating(node)}
                   style={floatingStyles}
                >

@@ -39,9 +39,11 @@ const Menu = ({
                      },
                   })}
                   className='rounded-[14px] py-1.5 overflow-hidden border-none! outline-none! bg-(--color-input-menu-bg-color) shadow-[0_1px_20px_0_rgba(13,46,105,0.07),0_1px_20px_0_rgba(13,46,105,0.07)]'
-                  ref={refs?.setFloating}
                   style={{ ...floatingStyles, height: 192 }}
                   tabIndex={-1}
+                  ref={node => {
+                     refs?.setFloating(node);
+                  }}
                >
                   <div className='h-full px-1.5 overflow-auto'>
                      {options.map((option, index = 0) => (

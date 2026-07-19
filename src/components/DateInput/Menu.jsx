@@ -232,7 +232,7 @@ const Menu = ({
                   {...getFloatingProps()}
                   style={floatingStyles}
                   ref={node => {
-                     refs.setFloating(node);
+                     refs?.setFloating(node);
                   }}
                >
                   <Calendar

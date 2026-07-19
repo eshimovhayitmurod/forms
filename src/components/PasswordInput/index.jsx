@@ -1,19 +1,27 @@
-import { bool, func, oneOf, string } from 'prop-types';
-import { Fragment, memo, useRef, useState } from 'react';
+import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
+import { memo, useRef, useState } from 'react';
 import {
+   containerClass,
    dropdownContainerClass,
    dropdownInputClass,
    dropdownTriggerClass,
    dropdownTriggerIconClass,
-   inputErrorClass,
+   errorClass,
 } from '../classNames';
-import CloseIcon from './CloseIcon';
-import OpenIcon from './OpenIcon';
+import Close from './Icons/Close';
+import Open from './Icons/Open';
 const PasswordInput = memo(
    ({
+      'aria-label': ariaLabel,
       'data-cy': dataCY,
+      containerClassName = '',
+      disabled = false,
+      dropdownContainerClassName = '',
+      dropdownInputClassName = '',
+      dropdownTriggerClassName = '',
+      dropdownTriggerIconClassName = '',
       error = '',
-      isDisabled = false,
+      errorClassName = '',
       name,
       onBlur,
       onChange,
@@ -26,14 +34,25 @@ const PasswordInput = memo(
       const [type, setType] = useState(false);
       const currentRef = useRef(null);
       const innerRef = ref ? ref : currentRef;
-      const classNameOptions = { size, error, disabled: isDisabled };
+      const classNameOptions = {
+         containerClassName,
+         disabled: !!disabled,
+         dropdownContainerClassName,
+         dropdownInputClassName,
+         dropdownTriggerClassName,
+         dropdownTriggerIconClassName,
+         error: !!error,
+         errorClassName,
+         size,
+      };
       return (
-         <Fragment>
+         <div className={containerClass(classNameOptions)}>
             <div className={dropdownContainerClass(classNameOptions)}>
                <input
+                  aria-label={ariaLabel}
                   className={dropdownInputClass(classNameOptions)}
                   data-cy={dataCY}
-                  disabled={!!isDisabled}
+                  disabled={!!disabled}
                   name={name}
                   onBlur={onBlur}
                   onChange={e => onChange(e.target.value)}
@@ -46,7 +65,7 @@ const PasswordInput = memo(
                <div className={dropdownTriggerClass(classNameOptions)}>
                   <button
                      className={dropdownTriggerIconClass(classNameOptions)}
-                     disabled={isDisabled}
+                     disabled={disabled}
                      type='button'
                      onClick={() => {
                         setType(!type);
@@ -55,26 +74,36 @@ const PasswordInput = memo(
                         }
                      }}
                   >
-                     {type ? <CloseIcon /> : <OpenIcon />}
+                     {type ? <Close /> : <Open />}
                   </button>
                </div>
             </div>
             {!!error && (
-               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+               <h5 className={errorClass(classNameOptions)} role='alert'>
+                  {error}
+               </h5>
             )}
-         </Fragment>
+         </div>
       );
    },
 );
 PasswordInput.propTypes = {
+   'aria-label': string,
    'data-cy': string,
+   containerClassName: string,
+   disabled: bool,
+   dropdownContainerClassName: string,
+   dropdownInputClassName: string,
+   dropdownTriggerClassName: string,
+   dropdownTriggerIconClassName: string,
    error: string,
-   isDisabled: bool,
+   errorClassName: string,
    name: string,
    onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
+   ref: oneOfType([func, shape({ current: any })]),
    size: oneOf(['lg', 'md', 'sm']),
    value: string,
 };

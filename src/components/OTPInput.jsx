@@ -1,12 +1,12 @@
 import { any, bool, func, number, string } from 'prop-types';
 import { memo } from 'react';
 import ReactOtpInput from 'react-otp-input';
-import { inputErrorClass, otpInputClass } from './classNames';
+import { errorClass, otpInputClass } from './classNames';
 const OTPInput = memo(
    ({
       autoFocus = false,
+      disabled = false,
       error,
-      isDisabled = false,
       length = 5,
       onChange,
       onFocus,
@@ -14,8 +14,7 @@ const OTPInput = memo(
       size = 'md',
       value = '',
    }) => {
-      const isError = !!error;
-      const classNameOptions = { size, error, disabled: isDisabled };
+      const classNameOptions = { size, error: !!error, disabled: disabled };
       return (
          <div>
             <ReactOtpInput
@@ -29,13 +28,15 @@ const OTPInput = memo(
                   <input
                      {...props}
                      className={otpInputClass(classNameOptions)}
-                     disabled={isDisabled}
+                     disabled={disabled}
                      onFocus={onFocus}
                   />
                )}
             />
-            {isError && (
-               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+            {!!error && (
+               <h5 className={errorClass(classNameOptions)} role='alert'>
+                  {error}
+               </h5>
             )}
          </div>
       );
@@ -43,7 +44,7 @@ const OTPInput = memo(
 );
 OTPInput.propTypes = {
    autoFocus: bool,
-   isDisabled: bool,
+   disabled: bool,
    error: any,
    length: number,
    onChange: func,

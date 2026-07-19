@@ -78,14 +78,16 @@ select {
    font-family: 'Poppins', sans-serif !important;
 }
 ::-webkit-scrollbar {
-   width: 8px;
+   height: 7px;
+   width: 7px;
 }
 ::-webkit-scrollbar-track {
    background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-   background-color: #3a79f3;
+   background-color: rgba(0, 0, 0, 0.45);
    border-radius: 4px;
+   cursor: pointer;
 }
 html {
    scroll-behavior: smooth;

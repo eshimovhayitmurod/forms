@@ -1,15 +1,32 @@
-import { bool, func, oneOf, string } from 'prop-types';
+import {
+   any,
+   bool,
+   func,
+   number,
+   oneOf,
+   oneOfType,
+   shape,
+   string,
+} from 'prop-types';
 import { memo } from 'react';
 import {
-   inputContainerClass,
-   inputErrorClass,
+   containerClass,
+   errorClass,
    textareaClass,
+   textareaContainerClass,
 } from './classNames';
-const TextInput = memo(
+const Textarea = memo(
    ({
+      'aria-label': ariaLabel,
       'data-cy': dataCY,
+      containerClassName = '',
+      disabled = false,
       error = '',
-      isDisabled = false,
+      errorClassName = '',
+      id,
+      maxHeight = 350,
+      maxLength = 1000,
+      minHeight = 95,
       name,
       onBlur,
       onChange,
@@ -17,41 +34,65 @@ const TextInput = memo(
       placeholder = '',
       ref,
       size = 'md',
+      textareaClassName = 'text',
       value = '',
    }) => {
-      const isError = !!error;
-      const classNameOptions = { size, error, disabled: isDisabled };
+      const classNameOptions = {
+         containerClassName,
+         error: !!error,
+         errorClassName,
+         maxHeight,
+         minHeight,
+         size,
+         textareaClassName,
+      };
       return (
-         <div className={inputContainerClass(classNameOptions)}>
-            <textarea
-               className={textareaClass(classNameOptions)}
-               data-cy={dataCY}
-               disabled={!!isDisabled}
-               name={name}
-               onBlur={onBlur}
-               onChange={e => onChange(e.target.value)}
-               onFocus={onFocus}
-               placeholder={placeholder}
-               ref={ref}
-               value={value}
-            />
-            {isError && (
-               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+         <div className={containerClass(classNameOptions)}>
+            <div className={textareaContainerClass(classNameOptions)}>
+               <textarea
+                  aria-label={ariaLabel}
+                  className={textareaClass(classNameOptions)}
+                  data-cy={dataCY}
+                  disabled={!!disabled}
+                  id={id}
+                  maxLength={maxLength}
+                  name={name}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)}
+                  onFocus={onFocus}
+                  placeholder={placeholder}
+                  ref={ref}
+                  value={value}
+               />
+            </div>
+            {!!error && (
+               <h5 className={errorClass(classNameOptions)} role='alert'>
+                  {error}
+               </h5>
             )}
          </div>
       );
    },
 );
-TextInput.propTypes = {
+Textarea.propTypes = {
+   'aria-label': string,
    'data-cy': string,
+   containerClassName: string,
+   disabled: bool,
    error: string,
-   isDisabled: bool,
+   errorClassName: string,
+   id: string,
+   maxHeight: number,
+   maxLength: number,
+   minHeight: number,
    name: string,
    onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
+   ref: oneOfType([func, shape({ current: any })]),
    size: oneOf(['lg', 'md', 'sm']),
+   textareaClassName: string,
    value: string,
 };
-export default TextInput;
+export default Textarea;

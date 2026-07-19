@@ -1,11 +1,11 @@
-import { Fragment } from 'react';
 import { IMask, IMaskInput } from 'react-imask';
 import {
+   containerClass,
    dropdownContainerClass,
    dropdownInputClass,
    dropdownTriggerClass,
    dropdownTriggerIconClass,
-   inputErrorClass,
+   errorClass,
 } from '../classNames';
 const maskOptions = {
    autofix: true,
@@ -31,10 +31,17 @@ const maskOptions = {
    },
 };
 const Control = ({
+   ariaLabel,
+   containerClassName = '',
    dataCY,
+   disabled = false,
+   dropdownContainerClassName = '',
+   dropdownInputClassName = '',
+   dropdownTriggerClassName = '',
+   dropdownTriggerIconClassName = '',
    error = '',
+   errorClassName = '',
    getReferenceProps,
-   isDisabled = false,
    name,
    onBlur,
    onChange,
@@ -46,20 +53,32 @@ const Control = ({
    size = 'md',
    value,
 }) => {
-   const isError = !!error;
-   const classNameOptions = { disabled: isDisabled, error, size };
+   const classNameOptions = {
+      containerClassName,
+      disabled: !!disabled,
+      dropdownContainerClassName,
+      dropdownInputClassName,
+      dropdownTriggerClassName,
+      dropdownTriggerIconClassName,
+      error: !!error,
+      errorClassName,
+      size,
+   };
    return (
-      <Fragment>
+      <div className={containerClass(classNameOptions)}>
          <div
             className={dropdownContainerClass(classNameOptions)}
             onFocus={onFocus}
-            ref={refs?.setReference}
+            ref={node => {
+               refs?.setReference(node);
+            }}
          >
             <IMaskInput
                {...maskOptions}
+               aria-label={ariaLabel}
                className={dropdownInputClass(classNameOptions)}
                data-cy={dataCY}
-               disabled={isDisabled}
+               disabled={disabled}
                inputMode='numeric'
                inputRef={ref}
                mask={seconds ? 'HH:MM:SS' : 'HH:MM'}
@@ -86,10 +105,12 @@ const Control = ({
                </div>
             </div>
          </div>
-         {isError && (
-            <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+         {!!error && (
+            <h5 className={errorClass(classNameOptions)} role='alert'>
+               {error}
+            </h5>
          )}
-      </Fragment>
+      </div>
    );
 };
 export default Control;

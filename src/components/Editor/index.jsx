@@ -12,7 +12,7 @@ import Toolbar from './Toolbar';
 const Editor = ({
    'data-cy': dataCY,
    isDisabled = false,
-   error = 'djnewo',
+   error,
    onBlur,
    onChange,
    onFocus,
@@ -58,7 +58,7 @@ const Editor = ({
             // ELEMENT STYLES
             'rounded-[10px] overflow-hidden w-full',
             // PROSE MIRROR STYLES
-            '[&_.ProseMirror]:p-2.5 [&_.ProseMirror]:border-2 [&_.ProseMirror]:rounded-b-[10px] [&_.ProseMirror]:field-sizing:content [&_.ProseMirror]:max-h-125 [&_.ProseMirror]:min-h-23.5 [&_.ProseMirror]:outline-none [&_.ProseMirror]:overflow-y-auto [&_.ProseMirror_*]:[all:revert] [&_.ProseMirror_*]:isolate',
+            '[&_.ProseMirror]:px-2.5 [&_.ProseMirror]:border-2 [&_.ProseMirror]:rounded-b-[10px] [&_.ProseMirror]:field-sizing:content [&_.ProseMirror]:max-h-125 [&_.ProseMirror]:min-h-23.5 [&_.ProseMirror]:outline-none [&_.ProseMirror]:overflow-y-auto [&_.ProseMirror_*]:[all:revert] [&_.ProseMirror_*]:isolate',
             // PROSE MIRROR BACKGROUND
             '[&_.ProseMirror]:bg-transparent',
             `[&_.ProseMirror[contenteditable='false']]:bg-[#f4f4f4]`,

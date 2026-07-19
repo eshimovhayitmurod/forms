@@ -1,13 +1,20 @@
-import { bool, func, oneOf, string } from 'prop-types';
+import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
 import { Fragment, memo, useMemo, useState } from 'react';
 import Control from './Control';
 import Menu from './Menu';
 import useDropdown from './useDropdown';
 const DateInput = memo(
    ({
+      'aria-label': ariaLabel,
       'data-cy': dataCY,
-      isDisabled = false,
+      containerClassName = '',
+      disabled = false,
+      dropdownContainerClassName = '',
+      dropdownInputClassName = '',
+      dropdownTriggerClassName = '',
+      dropdownTriggerIconClassName = '',
       error = '',
+      errorClassName = '',
       maxDate = '',
       minDate = '',
       name,
@@ -15,6 +22,7 @@ const DateInput = memo(
       onChange,
       onFocus,
       placeholder = '',
+      ref,
       size = 'md',
       value = '',
    }) => {
@@ -28,7 +36,7 @@ const DateInput = memo(
          setOpen,
          open,
       } = useDropdown({
-         isDisabled,
+         disabled,
          setCalendar,
          value,
       });
@@ -59,10 +67,17 @@ const DateInput = memo(
       return (
          <Fragment>
             <Control
+               ariaLabel={ariaLabel}
+               containerClassName={containerClassName}
                dataCY={dataCY}
-               getReferenceProps={getReferenceProps}
-               isDisabled={isDisabled}
+               disabled={disabled}
+               dropdownContainerClassName={dropdownContainerClassName}
+               dropdownInputClassName={dropdownInputClassName}
+               dropdownTriggerClassName={dropdownTriggerClassName}
+               dropdownTriggerIconClassName={dropdownTriggerIconClassName}
                error={error}
+               errorClassName={errorClassName}
+               getReferenceProps={getReferenceProps}
                max={max}
                min={min}
                name={name}
@@ -70,6 +85,7 @@ const DateInput = memo(
                onChange={onChange}
                onFocus={onFocus}
                placeholder={placeholder}
+               ref={ref}
                refs={refs}
                size={size}
                value={value}
@@ -92,15 +108,24 @@ const DateInput = memo(
    },
 );
 DateInput.propTypes = {
+   'aria-label': string,
    'data-cy': string,
-   isDisabled: bool,
+   containerClassName: string,
+   disabled: bool,
+   dropdownContainerClassName: string,
+   dropdownInputClassName: string,
+   dropdownTriggerClassName: string,
+   dropdownTriggerIconClassName: string,
    error: string,
+   errorClassName: string,
    maxDate: string,
    minDate: string,
    name: string,
+   onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
+   ref: oneOfType([func, shape({ current: any })]),
    size: oneOf(['sm', 'md', 'lg']),
    value: string,
 };

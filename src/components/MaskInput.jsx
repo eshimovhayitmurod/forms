@@ -1,7 +1,12 @@
-import { bool, func, oneOf, string } from 'prop-types';
+import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
 import { memo, useMemo } from 'react';
 import { IMaskInput } from 'react-imask';
-import { inputClass, inputContainerClass, inputErrorClass } from './classNames';
+import {
+   containerClass,
+   errorClass,
+   inputClass,
+   inputContainerClass,
+} from './classNames';
 const types = [
    {
       mask: '00000000000000000000',
@@ -47,20 +52,34 @@ const types = [
 const typesList = types.map(type => type?.value);
 const MaskInput = memo(
    ({
+      'aria-label': ariaLabel,
       'data-cy': dataCY,
+      containerClassName = '',
+      disabled = false,
       error = '',
-      isDisabled = false,
+      errorClassName = '',
+      id,
+      inputClassName = '',
+      inputContainerClassName = '',
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
+      ref,
       size = 'md',
       type = 'tin',
       value = '',
    }) => {
-      const isError = !!error;
-      const classNameOptions = { size, error, disabled: isDisabled };
+      const classNameOptions = {
+         containerClassName,
+         disabled: !!disabled,
+         error: !!error,
+         errorClassName,
+         inputClassName,
+         inputContainerClassName,
+         size,
+      };
       const inputMode = useMemo(
          () => (type === 'passport' && value?.length < 2 ? 'latin' : 'numeric'),
          [type, value],
@@ -80,38 +99,51 @@ const MaskInput = memo(
          return mask;
       }, [newType]);
       return (
-         <div className={inputContainerClass(classNameOptions)}>
-            <IMaskInput
-               className={inputClass(classNameOptions)}
-               data-cy={dataCY}
-               disabled={isDisabled}
-               inputMode={inputMode}
-               mask={mask}
-               name={name}
-               onAccept={value => onChange(transform(value))}
-               onBlur={onBlur}
-               onFocus={onFocus}
-               placeholder={placeholder}
-               type='text'
-               value={value}
-            />
-            {isError && (
-               <h5 className={inputErrorClass(classNameOptions)}>{error}</h5>
+         <div className={containerClass(classNameOptions)}>
+            <div className={inputContainerClass(classNameOptions)}>
+               <IMaskInput
+                  aria-label={ariaLabel}
+                  className={inputClass(classNameOptions)}
+                  data-cy={dataCY}
+                  disabled={disabled}
+                  id={id}
+                  inputMode={inputMode}
+                  inputRef={ref}
+                  mask={mask}
+                  name={name}
+                  onAccept={value => onChange(transform(value))}
+                  onBlur={onBlur}
+                  onFocus={onFocus}
+                  placeholder={placeholder}
+                  type='text'
+                  value={value}
+               />
+            </div>
+            {!!error && (
+               <h5 className={errorClass(classNameOptions)} role='alert'>
+                  {error}
+               </h5>
             )}
          </div>
       );
    },
 );
 MaskInput.propTypes = {
+   'aria-label': string,
    'data-cy': string,
-   hideBorder: bool,
-   isDisabled: bool,
-   isError: bool,
+   containerClassName: string,
+   disabled: bool,
+   error: string,
+   errorClassName: string,
+   id: string,
+   inputClassName: string,
+   inputContainerClassName: string,
    name: string,
    onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
+   ref: oneOfType([func, shape({ current: any })]),
    size: oneOf(['large', 'medium', 'small']),
    type: oneOf(typesList),
    value: string,

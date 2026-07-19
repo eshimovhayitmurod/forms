@@ -1,4 +1,4 @@
-const OpenIcon = () => (
+const Open = () => (
    <svg
       fill='none'
       height='20'
@@ -13,4 +13,4 @@ const OpenIcon = () => (
       <circle cx='12' cy='12' r='3'></circle>
    </svg>
 );
-export default OpenIcon;
+export default Open;

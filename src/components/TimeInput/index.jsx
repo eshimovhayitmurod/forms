@@ -1,4 +1,4 @@
-import { any, bool, func, string } from 'prop-types';
+import { any, bool, func, oneOfType, shape, string } from 'prop-types';
 import { Fragment, memo, useEffect, useRef } from 'react';
 import { options } from './constants';
 import Control from './Control';
@@ -6,9 +6,15 @@ import Menu from './Menu';
 import useDropdown from './useDropdown';
 const TimeInput = memo(
    ({
+      'aria-label': ariaLabel,
       'data-cy': dataCY,
+      containerClassName = '',
+      disabled = false,
+      dropdownContainerClassName = '',
+      dropdownInputClassName = '',
+      dropdownTriggerClassName = '',
+      dropdownTriggerIconClassName = '',
       error = '',
-      isDisabled = false,
       name,
       onBlur,
       onChange,
@@ -18,6 +24,7 @@ const TimeInput = memo(
       seconds = true,
       size = 'md',
       value,
+      errorClassName = '',
    }) => {
       const listRef = useRef([]);
       const optionsCount = options?.length;
@@ -32,7 +39,7 @@ const TimeInput = memo(
          refs,
          setActiveIndex,
          setOpen,
-      } = useDropdown({ isDisabled, listRef });
+      } = useDropdown({ disabled, listRef });
       useEffect(() => {
          listRef.current = [];
          for (let i = 0; i < optionsCount; i++) {
@@ -42,10 +49,17 @@ const TimeInput = memo(
       return (
          <Fragment>
             <Control
+               ariaLabel={ariaLabel}
+               containerClassName={containerClassName}
                dataCY={dataCY}
+               disabled={disabled}
+               dropdownContainerClassName={dropdownContainerClassName}
+               dropdownInputClassName={dropdownInputClassName}
+               dropdownTriggerClassName={dropdownTriggerClassName}
+               dropdownTriggerIconClassName={dropdownTriggerIconClassName}
                error={error}
+               errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
-               isDisabled={isDisabled}
                name={name}
                onBlur={onBlur}
                onChange={onChange}
@@ -77,12 +91,21 @@ const TimeInput = memo(
    },
 );
 TimeInput.propTypes = {
-   isDisabled: bool,
-   error: bool,
+   'aria-label': string,
+   'data-cy': string,
+   containerClassName: string,
+   disabled: bool,
+   dropdownContainerClassName: string,
+   dropdownInputClassName: string,
+   dropdownTriggerClassName: string,
+   dropdownTriggerIconClassName: string,
+   error: string,
+   errorClassName: string,
+   name: string,
    onChange: func,
    onFocus: func,
    placeholder: string,
+   ref: oneOfType([func, shape({ current: any })]),
    value: any,
-   name: string,
 };
 export default TimeInput;

@@ -11,7 +11,7 @@ import {
 } from '@floating-ui/react';
 import { any, bool, func, string } from 'prop-types';
 import { useState } from 'react';
-const useDropdown = ({ isDisabled = false }) => {
+const useDropdown = ({ disabled = false }) => {
    const [open, setOpen] = useState(false);
    const { refs, floatingStyles, context } = useFloating({
       open,
@@ -23,7 +23,7 @@ const useDropdown = ({ isDisabled = false }) => {
          shift(),
       ],
    });
-   const click = useClick(context, { enabled: !isDisabled });
+   const click = useClick(context, { enabled: !disabled });
    const dismiss = useDismiss(context);
    const role = useRole(context);
    const { getReferenceProps, getFloatingProps } = useInteractions([

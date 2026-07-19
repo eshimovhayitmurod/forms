@@ -13,7 +13,7 @@ import {
 } from '@floating-ui/react';
 import { any, bool, func, string } from 'prop-types';
 import { useState } from 'react';
-const useDropdown = ({ isDisabled = false, listRef }) => {
+const useDropdown = ({ disabled = false, listRef }) => {
    const [open, setOpen] = useState(false);
    const [activeIndex, setActiveIndex] = useState(0);
    const { refs, floatingStyles, context } = useFloating({
@@ -38,7 +38,7 @@ const useDropdown = ({ isDisabled = false, listRef }) => {
          }),
       ],
    });
-   const click = useClick(context, { enabled: !isDisabled });
+   const click = useClick(context, { enabled: !disabled });
    const dismiss = useDismiss(context);
    const role = useRole(context);
    const listNavigation = useListNavigation(context, {
@@ -65,7 +65,7 @@ const useDropdown = ({ isDisabled = false, listRef }) => {
    };
 };
 useDropdown.propTypes = {
-   isDisabled: bool,
+   disabled: bool,
    isError: bool,
    onChange: func,
    onFocus: func,
