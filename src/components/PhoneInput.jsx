@@ -55,11 +55,11 @@ const PhoneInput = memo(
                   placeholderChar=' '
                   type='text'
                   value={value}
-                  onAccept={value => {
+                  onAccept={(value, event) => {
                      const cleaned = value.replace(/\D/g, '');
                      const newValue =
                         cleaned === '998' ? '' : value.replace(/\)|\(| /g, '');
-                     onChange(newValue);
+                     onChange(newValue, { event });
                   }}
                   onBlur={e => {
                      setLazy(true);

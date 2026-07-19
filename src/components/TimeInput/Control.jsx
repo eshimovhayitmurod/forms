@@ -69,10 +69,7 @@ const Control = ({
       <div className={containerClass(classNameOptions)}>
          <div
             className={dropdownContainerClass(classNameOptions)}
-            onFocus={onFocus}
-            ref={node => {
-               refs?.setReference(node);
-            }}
+            ref={node => refs?.setReference(node)}
          >
             <IMaskInput
                {...maskOptions}
@@ -85,11 +82,14 @@ const Control = ({
                inputRef={ref}
                mask={seconds ? 'HH:MM:SS' : 'HH:MM'}
                name={name}
-               onAccept={onChange}
                onBlur={onBlur}
+               onFocus={onFocus}
                placeholder={placeholder}
                type='text'
                value={value}
+               onAccept={(value, event) => {
+                  onChange(value, { event });
+               }}
             />
             <div className={dropdownTriggerClass(classNameOptions)}>
                <div

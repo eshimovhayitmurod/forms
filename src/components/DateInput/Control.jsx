@@ -98,8 +98,8 @@ const Control = ({
                      to: 9999,
                   },
                }}
-               onChange={e => {
-                  const value = e.target.value;
+               onChange={event => {
+                  const value = event.target.value;
                   const input = value.split('-').reverse().join('-');
                   if (value?.length === 10) {
                      const inputDate = new Date(input).getTime();
@@ -111,10 +111,10 @@ const Control = ({
                            : inputDate < minDate && minDate
                              ? new Date(minDate).toISOString().slice(0, 10)
                              : input;
-                     onChange(newValue);
+                     onChange(newValue, { event });
                      return;
                   } else {
-                     onChange(input);
+                     onChange(input, { event });
                   }
                }}
             />

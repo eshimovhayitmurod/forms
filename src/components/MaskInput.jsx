@@ -111,12 +111,14 @@ const MaskInput = memo(
                   inputRef={ref}
                   mask={mask}
                   name={name}
-                  onAccept={value => onChange(transform(value))}
                   onBlur={onBlur}
                   onFocus={onFocus}
                   placeholder={placeholder}
                   type='text'
                   value={value}
+                  onAccept={(value, event) => {
+                     onChange(transform(value), { event });
+                  }}
                />
             </div>
             {!!error && (

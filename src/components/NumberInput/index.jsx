@@ -55,21 +55,21 @@ const NumberInput = memo(
          return memoizedValue;
       }, [value]);
       const onChangeInput = useCallback(
-         e => {
-            const value = parseValue(e.target.value, { scale, min, max });
-            onChange(value);
+         event => {
+            const value = parseValue(event.target.value, { scale, min, max });
+            onChange(value, { event });
          },
          [onChange, min, max, scale],
       );
       const onBlurInput = useCallback(
-         e => {
-            const value = e.target.value;
+         event => {
+            const value = event.target.value;
             const newValue = normalizeNumberString(value);
             if (value !== newValue && normalizeOnBlur) {
-               onChange(newValue);
+               onChange(newValue, { event });
             }
             if (typeof onBlur === 'function') {
-               onBlur(e);
+               onBlur(event);
             }
          },
          [onBlur, onChange, normalizeOnBlur],

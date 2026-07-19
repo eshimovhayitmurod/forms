@@ -123,7 +123,7 @@ const SwitchInput = memo(
                disabled={isDisabled}
                id={innerId || id}
                name={name}
-               onChange={e => onChange(e.target.checked)}
+               onChange={event => onChange(event.target.checked, { event })}
                type='checkbox'
             />
             <label

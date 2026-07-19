@@ -56,12 +56,15 @@ const Control = ({
                lazy={true}
                mask='#HHHHHHHH'
                name={name}
-               onAccept={onChange}
                onFocus={onFocus}
                overwrite={true}
                placeholder={placeholder}
                value={value}
-               onBlur={e => {
+               onAccept={(value, event) => {
+                  onChange(value, { event });
+               }}
+               onBlur={event => {
+                  const value = event?.target?.value;
                   const newValue =
                      value?.length === 9
                         ? value
@@ -70,9 +73,9 @@ const Control = ({
                           : value?.length >= 4
                             ? value.slice(0, 4)
                             : '';
-                  onChange(newValue);
+                  onChange(newValue, { event });
                   if (typeof onBlur === 'function') {
-                     onBlur(e);
+                     onBlur(event);
                   }
                }}
             />

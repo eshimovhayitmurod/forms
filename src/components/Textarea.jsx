@@ -54,7 +54,7 @@ const Textarea = memo(
                   maxLength={maxLength}
                   name={name}
                   onBlur={onBlur}
-                  onChange={e => onChange(e.target.value)}
+                  onChange={event => onChange(event.target.value, { event })}
                   onFocus={onFocus}
                   placeholder={placeholder}
                   ref={ref}
