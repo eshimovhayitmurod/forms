@@ -22,6 +22,7 @@ const PasswordInput = memo(
       dropdownTriggerIconClassName = '',
       error = '',
       errorClassName = '',
+      id,
       name,
       onBlur,
       onChange,
@@ -53,6 +54,7 @@ const PasswordInput = memo(
                   className={dropdownInputClass(classNameOptions)}
                   data-cy={dataCY}
                   disabled={!!disabled}
+                  id={id}
                   name={name}
                   onBlur={onBlur}
                   onChange={e => onChange(e.target.value)}
@@ -98,6 +100,7 @@ PasswordInput.propTypes = {
    dropdownTriggerIconClassName: string,
    error: string,
    errorClassName: string,
+   id: string,
    name: string,
    onBlur: func,
    onChange: func,

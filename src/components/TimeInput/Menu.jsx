@@ -1,5 +1,6 @@
 import { FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import { useCallback } from 'react';
+import { dropdownMenuClass } from '../classNames';
 import Option from './Option';
 const Menu = ({
    activeIndex,
@@ -38,28 +39,28 @@ const Menu = ({
                         }
                      },
                   })}
-                  className='rounded-[14px] py-1.5 overflow-hidden border-none! outline-none! bg-(--color-input-menu-bg-color) shadow-[0_1px_20px_0_rgba(13,46,105,0.07),0_1px_20px_0_rgba(13,46,105,0.07)]'
+                  className={dropdownMenuClass()}
+                  ref={node => refs?.setFloating(node)}
                   style={{ ...floatingStyles, height: 192 }}
                   tabIndex={-1}
-                  ref={node => {
-                     refs?.setFloating(node);
-                  }}
                >
-                  <div className='h-full px-1.5 overflow-auto'>
-                     {options.map((option, index = 0) => (
-                        <Option
-                           activeIndex={activeIndex}
-                           dataCY={dataCY}
-                           getItemProps={getItemProps}
-                           index={index}
-                           key={index}
-                           listRef={listRef}
-                           onSelect={onSelect}
-                           option={option}
-                           setActiveIndex={setActiveIndex}
-                           value={value}
-                        />
-                     ))}
+                  <div className='h-full rounded-[14px] py-1.5 overflow-hidden'>
+                     <div className='h-full px-1.5 overflow-auto'>
+                        {options.map((option, index = 0) => (
+                           <Option
+                              activeIndex={activeIndex}
+                              dataCY={dataCY}
+                              getItemProps={getItemProps}
+                              index={index}
+                              key={index}
+                              listRef={listRef}
+                              onSelect={onSelect}
+                              option={option}
+                              setActiveIndex={setActiveIndex}
+                              value={value}
+                           />
+                        ))}
+                     </div>
                   </div>
                </div>
             </FloatingFocusManager>

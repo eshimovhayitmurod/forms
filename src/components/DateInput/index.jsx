@@ -15,6 +15,7 @@ const DateInput = memo(
       dropdownTriggerIconClassName = '',
       error = '',
       errorClassName = '',
+      id,
       maxDate = '',
       minDate = '',
       name,
@@ -78,6 +79,7 @@ const DateInput = memo(
                error={error}
                errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
+               id={id}
                max={max}
                min={min}
                name={name}
@@ -118,6 +120,7 @@ DateInput.propTypes = {
    dropdownTriggerIconClassName: string,
    error: string,
    errorClassName: string,
+   id: string,
    maxDate: string,
    minDate: string,
    name: string,

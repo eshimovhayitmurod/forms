@@ -42,6 +42,7 @@ const Control = ({
    error = '',
    errorClassName = '',
    getReferenceProps,
+   id,
    name,
    onBlur,
    onChange,
@@ -79,6 +80,7 @@ const Control = ({
                className={dropdownInputClass(classNameOptions)}
                data-cy={dataCY}
                disabled={disabled}
+               id={id}
                inputMode='numeric'
                inputRef={ref}
                mask={seconds ? 'HH:MM:SS' : 'HH:MM'}

@@ -1,5 +1,6 @@
 import { FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import { HexAlphaColorPicker } from 'react-colorful';
+import { dropdownMenuClass } from '../classNames';
 const Menu = ({
    context,
    floatingStyles,
@@ -19,11 +20,13 @@ const Menu = ({
             >
                <div
                   {...getFloatingProps()}
-                  className='rounded-[14px] p-3 bg-(--color-input-menu-bg-color) shadow-[0_1px_20px_0_rgba(13,46,105,0.07),0_1px_20px_0_rgba(13,46,105,0.07)]'
-                  ref={refs?.setFloating}
+                  className={dropdownMenuClass()}
+                  ref={node => refs?.setFloating(node)}
                   style={floatingStyles}
                >
-                  <HexAlphaColorPicker color={value} onChange={onChange} />
+                  <div className='rounded-[14px] p-3'>
+                     <HexAlphaColorPicker color={value} onChange={onChange} />
+                  </div>
                </div>
             </FloatingFocusManager>
          </FloatingPortal>

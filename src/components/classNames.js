@@ -99,12 +99,7 @@ export const textareaContainerClass = ({
       textareaContainerClassName,
    );
 };
-export const textareaClass = ({
-   maxHeight = 350,
-   minHeight = 95,
-   size = 'md',
-   textareaClassName = '',
-}) => {
+export const textareaClass = ({ size = 'md', textareaClassName = '' }) => {
    return clsx(
       'w-full disabled:cursor-default border-none outline-none focus:outline-none font-medium block box-border field-sizing-content resize-none py-[10px] pr-[10px] pl-[17px]',
 
@@ -115,7 +110,7 @@ export const textareaClass = ({
 
       'placeholder:text-(--input-placeholder-color)',
 
-      `min-h-[${minHeight}px] max-h-[${maxHeight}px]`,
+      'min-h-[95px] max-h-[350px]',
       {
          'text-[16px] rounded-[10px]': !size || size === 'md',
          'text-[18px] rounded-[10px]': size === 'lg',
@@ -203,6 +198,11 @@ export const dropdownTriggerIconClass = ({
          'h-7 w-7': size === 'sm',
       },
       dropdownTriggerIconClassName,
+   );
+};
+export const dropdownMenuClass = () => {
+   return clsx(
+      'rounded-[14px] outline-none! bg-(--color-input-menu-bg-color) shadow-[0_1px_20px_0_rgba(13,46,105,0.07),0_1px_20px_0_rgba(13,46,105,0.07)]',
    );
 };
 

@@ -60,22 +60,6 @@ const App = () => {
             <div className='text-[24px] font-semibold mt-6 mb-2 w-75'>
                Inputs
             </div>
-            <div className='py-2 w-180'>
-               <Label>Editor</Label>
-               <Editor onChange={setEditor} value={editor} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Textarea input</Label>
-               <Textarea onChange={setTextarea} value={textarea} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Stars input</Label>
-               <StarsInput onChange={setStars} value={stars} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>OTP input</Label>
-               <OTPInput onChange={setOTP} value={otp} />
-            </div>
             <div className='py-2 w-75'>
                <Label>Text input</Label>
                <TextInput onChange={setText} value={text} />
@@ -111,6 +95,22 @@ const App = () => {
             <div className='py-2 w-75'>
                <Label>Select</Label>
                <Select onChange={setSelect} value={select} options={options} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Stars input</Label>
+               <StarsInput onChange={setStars} value={stars} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>OTP input</Label>
+               <OTPInput onChange={setOTP} value={otp} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Textarea input</Label>
+               <Textarea onChange={setTextarea} value={textarea} />
+            </div>
+            <div className='py-2 w-180'>
+               <Label>Editor</Label>
+               <Editor onChange={setEditor} value={editor} />
             </div>
             <div className='py-2 w-120'>
                <Label>File uploader</Label>

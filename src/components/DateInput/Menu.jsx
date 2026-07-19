@@ -2,16 +2,10 @@ import { FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import { useMemo } from 'react';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
+import { dropdownMenuClass } from '../classNames';
 import Next from './Icons/Next';
 import Prev from './Icons/Prev';
 const StyledCalendar = styled.div`
-   background-color: #ffffff;
-   border-radius: 14px;
-   padding: 12px;
-   outline: none !important;
-   box-shadow:
-      0 1px 20px 0 rgba(13, 46, 105, 0.07),
-      0 1px 20px 0 rgba(13, 46, 105, 0.07);
    & .react-calendar {
       border: none;
       width: 280px !important;
@@ -228,53 +222,55 @@ const Menu = ({
                initialFocus={false}
                modal={false}
             >
-               <StyledCalendar
+               <div
                   {...getFloatingProps()}
+                  className={dropdownMenuClass()}
+                  ref={node => refs?.setFloating(node)}
                   style={floatingStyles}
-                  ref={node => {
-                     refs?.setFloating(node);
-                  }}
                >
-                  <Calendar
-                     formatMonth={(_, date) => months[date?.getMonth()]}
-                     maxDate={max}
-                     minDate={min}
-                     next2Label={null}
-                     nextLabel={<Next />}
-                     prev2Label={null}
-                     prevLabel={<Prev />}
-                     showNeighboringMonth={false}
-                     value={calendar}
-                     formatShortWeekday={(_, date) => {
-                        const weekDay = days[date?.getDay()];
-                        return weekDay;
-                     }}
-                     navigationLabel={({ view, label, date }) => {
-                        const month = months[date?.getMonth()];
-                        const newDate = date?.getFullYear();
-                        const monthLabel = `${month} ${newDate}`;
-                        const isMonth = view === 'month';
-                        const newLabel = isMonth ? monthLabel : label;
-                        return newLabel;
-                     }}
-                     onChange={calendar => {
-                        const date = String(calendar.getDate() || '').padStart(
-                           2,
-                           '0',
-                        );
-                        const month = String(
-                           calendar.getMonth() + 1 || '',
-                        ).padStart(2, '0');
-                        const year = String(
-                           calendar.getFullYear() || '',
-                        ).padStart(2, '0');
-                        const value = `${year}-${month}-${date}`;
-                        setCalendar(calendar);
-                        setOpen(false);
-                        onChange(value);
-                     }}
-                  />
-               </StyledCalendar>
+                  <div className='rounded-[14px] p-3'>
+                     <StyledCalendar>
+                        <Calendar
+                           formatMonth={(_, date) => months[date?.getMonth()]}
+                           maxDate={max}
+                           minDate={min}
+                           next2Label={null}
+                           nextLabel={<Next />}
+                           prev2Label={null}
+                           prevLabel={<Prev />}
+                           showNeighboringMonth={false}
+                           value={calendar}
+                           formatShortWeekday={(_, date) => {
+                              const weekDay = days[date?.getDay()];
+                              return weekDay;
+                           }}
+                           navigationLabel={({ view, label, date }) => {
+                              const month = months[date?.getMonth()];
+                              const newDate = date?.getFullYear();
+                              const monthLabel = `${month} ${newDate}`;
+                              const isMonth = view === 'month';
+                              const newLabel = isMonth ? monthLabel : label;
+                              return newLabel;
+                           }}
+                           onChange={calendar => {
+                              const date = String(
+                                 calendar.getDate() || '',
+                              ).padStart(2, '0');
+                              const month = String(
+                                 calendar.getMonth() + 1 || '',
+                              ).padStart(2, '0');
+                              const year = String(
+                                 calendar.getFullYear() || '',
+                              ).padStart(2, '0');
+                              const value = `${year}-${month}-${date}`;
+                              setCalendar(calendar);
+                              setOpen(false);
+                              onChange(value);
+                           }}
+                        />
+                     </StyledCalendar>
+                  </div>
+               </div>
             </FloatingFocusManager>
          </FloatingPortal>
       )

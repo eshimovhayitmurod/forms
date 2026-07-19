@@ -15,6 +15,7 @@ const ColorInput = memo(
       dropdownTriggerIconClassName = '',
       error = '',
       errorClassName = '',
+      id,
       name,
       onBlur,
       onChange,
@@ -46,6 +47,7 @@ const ColorInput = memo(
                error={error}
                errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
+               id={id}
                name={name}
                onBlur={onBlur}
                onChange={onChange}
@@ -80,6 +82,7 @@ ColorInput.propTypes = {
    dropdownTriggerIconClassName: string,
    error: string,
    errorClassName: string,
+   id: string,
    name: string,
    onBlur: func,
    onChange: func,

@@ -18,6 +18,7 @@ const Control = ({
    error = '',
    errorClassName = '',
    getReferenceProps,
+   id,
    name,
    onBlur,
    onChange,
@@ -48,7 +49,9 @@ const Control = ({
             <IMaskInput
                aria-label={ariaLabel}
                className={dropdownInputClass(classNameOptions)}
+               definitions={{ H: /[0-9a-fA-F]/ }}
                disabled={disabled}
+               id={id}
                inputRef={ref}
                lazy={true}
                mask='#HHHHHHHH'
@@ -58,9 +61,6 @@ const Control = ({
                overwrite={true}
                placeholder={placeholder}
                value={value}
-               definitions={{
-                  H: /[0-9a-fA-F]/,
-               }}
                onBlur={e => {
                   const newValue =
                      value?.length === 9

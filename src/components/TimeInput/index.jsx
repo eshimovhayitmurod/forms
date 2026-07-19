@@ -15,6 +15,8 @@ const TimeInput = memo(
       dropdownTriggerClassName = '',
       dropdownTriggerIconClassName = '',
       error = '',
+      errorClassName = '',
+      id,
       name,
       onBlur,
       onChange,
@@ -24,7 +26,6 @@ const TimeInput = memo(
       seconds = true,
       size = 'md',
       value,
-      errorClassName = '',
    }) => {
       const listRef = useRef([]);
       const optionsCount = options?.length;
@@ -60,6 +61,7 @@ const TimeInput = memo(
                error={error}
                errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
+               id={id}
                name={name}
                onBlur={onBlur}
                onChange={onChange}
@@ -101,6 +103,7 @@ TimeInput.propTypes = {
    dropdownTriggerIconClassName: string,
    error: string,
    errorClassName: string,
+   id: string,
    name: string,
    onChange: func,
    onFocus: func,

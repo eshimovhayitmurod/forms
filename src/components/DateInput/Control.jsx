@@ -33,6 +33,7 @@ const Control = ({
    refs,
    size = 'md',
    value = '',
+   id,
 }) => {
    const classNameOptions = {
       containerClassName,
@@ -63,6 +64,7 @@ const Control = ({
                data-cy={dataCY}
                disabled={disabled}
                format={date => dateFormatter(date).format('DD-MM-YYYY')}
+               id={id}
                inputMode='numeric'
                inputRef={ref}
                lazy={true}
