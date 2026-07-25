@@ -1,35 +1,32 @@
 import clsx from 'clsx';
-
 // CONTAINER
-
-export const containerClass = ({ containerClassName = '' }) => {
-   return clsx(containerClassName);
-};
-
+export const containerClass = () => clsx('');
 // ERROR
-
-export const errorClass = ({ size = 'md', errorClassName = '' }) => {
+export const errorClass = ({ size = 'md' }) => {
+   return clsx('text-(--input-error-message-color) inline-block font-medium', {
+      'text-[11px]': size === 'sm',
+      'text-[12px]': !size || size === 'md',
+      'text-[13px]': size === 'lg',
+   });
+};
+// CLEAR BUTTON
+export const clearButtonClass = () => {
    return clsx(
-      'text-(--input-error-message-color) inline-block font-medium',
-      {
-         'text-[11px]': size === 'sm',
-         'text-[12px]': !size || size === 'md',
-         'text-[13px]': size === 'lg',
-      },
-      errorClassName,
+      'cursor-pointer outline-none items-center rounded-xl flex h-6 justify-center w-6',
+
+      'hover:bg-(--input-suffix-hover-and-focus-bg) focus:bg-(--input-suffix-hover-and-focus-bg)',
+
+      'text-(--input-suffix-color)',
    );
 };
-
 // INPUT
-
 export const inputContainerClass = ({
    disabled = false,
    error = false,
-   inputContainerClassName = '',
    size = 'md',
 }) => {
    return clsx(
-      'w-full border-2',
+      'w-full flex border-2',
 
       'bg-(--color-input-bg-color)',
       'has-[:disabled]:bg-(--color-input-disabled-bg-color)',
@@ -47,12 +44,31 @@ export const inputContainerClass = ({
          'h-12 rounded-[12px]': size === 'lg',
          'h-10 rounded-[9px]': size === 'sm',
       },
-      inputContainerClassName,
    );
 };
-export const inputClass = ({ inputClassName = '', size = 'md' }) => {
-   return clsx(
-      'w-full h-full disabled:cursor-default border-none outline-none focus:outline-none font-medium',
+export const inputClass = ({
+   clearable = false,
+   disabled = false,
+   loading = false,
+   size = 'md',
+}) => {
+   const hasAppendIcon = loading || (clearable && !disabled);
+   const width = !hasAppendIcon
+      ? 'w-full'
+      : size === 'sm'
+        ? 'w-[calc(100%-38px)]'
+        : size === 'lg'
+          ? 'w-[calc(100%-42px)]'
+          : 'w-[calc(100%-40px)]';
+   const paddingRight = hasAppendIcon
+      ? 'pl-0'
+      : !size || size === 'md'
+        ? 'pr-3.75'
+        : size === 'lg'
+          ? 'pr-4.5'
+          : 'pr-3';
+   const inputClass = clsx(
+      'h-full disabled:cursor-default border-none outline-none focus:outline-none font-medium',
 
       'bg-transparent',
 
@@ -61,21 +77,29 @@ export const inputClass = ({ inputClassName = '', size = 'md' }) => {
 
       'placeholder:text-(--input-placeholder-color)',
 
+      width,
+      paddingRight,
+
       {
-         'px-3.75 text-[16px] rounded-[10px]': !size || size === 'md',
-         'px-4.5 text-[18px] rounded-[10px]': size === 'lg',
-         'px-3 text-[15px] rounded-[9px]': size === 'sm',
+         'pl-3.25 text-[16px] rounded-[10px]': !size || size === 'md',
+         'pl-3.75 text-[17px] rounded-[10px]': size === 'lg',
+         'pl-3 text-[15px] rounded-[9px]': size === 'sm',
       },
-      inputClassName,
+   );
+   return inputClass;
+};
+export const inputSuffixClass = ({ size = 'md' }) => {
+   const width = size === 'sm' ? 'w-9.5' : size === 'lg' ? 'w-10.5' : 'w-10';
+   return clsx(
+      'h-full flex items-center justify-center rounded-[20px] select-none',
+      width,
    );
 };
-
 // TEXTAREA
 export const textareaContainerClass = ({
    disabled = false,
    error = false,
    size = 'md',
-   textareaContainerClassName = '',
 }) => {
    return clsx(
       'w-full border-2',
@@ -96,10 +120,9 @@ export const textareaContainerClass = ({
          'rounded-[12px]': size === 'lg',
          'rounded-[9px]': size === 'sm',
       },
-      textareaContainerClassName,
    );
 };
-export const textareaClass = ({ size = 'md', textareaClassName = '' }) => {
+export const textareaClass = ({ size = 'md' }) => {
    return clsx(
       'w-full disabled:cursor-default border-none outline-none focus:outline-none font-medium block box-border field-sizing-content resize-none py-[10px] pr-[10px] pl-[17px]',
 
@@ -116,7 +139,6 @@ export const textareaClass = ({ size = 'md', textareaClassName = '' }) => {
          'text-[18px] rounded-[10px]': size === 'lg',
          'text-[15px] rounded-[9px]': size === 'sm',
       },
-      textareaClassName,
    );
 };
 
@@ -192,7 +214,10 @@ export const dropdownTriggerIconClass = ({
 }) => {
    return clsx(
       'bg-transparent text-[#808080] rounded-full flex items-center justify-center outline-none border-none',
-      { 'cursor-pointer hover:bg-[#f1f1f1] focus:bg-[#f1f1f1]': !disabled },
+      {
+         'cursor-pointer hover:bg-(--input-suffix-hover-and-focus-bg) focus:bg-(--input-suffix-hover-and-focus-bg)':
+            !disabled,
+      },
       {
          'h-8 w-8': size === 'md' || size === 'lg' || !size,
          'h-7 w-7': size === 'sm',

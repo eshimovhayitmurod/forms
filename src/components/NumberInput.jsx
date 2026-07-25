@@ -8,25 +8,26 @@ import {
    shape,
    string,
 } from 'prop-types';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useRef } from 'react';
 import {
    containerClass,
-   errorClass,
    inputClass,
    inputContainerClass,
-} from '../classNames';
-import { normalizeNumberString, parseValue } from './helpers';
+   inputSuffixClass,
+} from './classNames';
+import ClearButton from './components/ClearButton';
+import ErrorMessage from './components/ErrorMessage';
+import Spinner from './components/Spinner';
+import { normalizeNumberString, parseValue } from './helpers/numberInput';
 const NumberInput = memo(
    ({
       'aria-label': ariaLabel,
       'data-cy': dataCY,
-      containerClassName = '',
+      clearable = false,
       disabled = false,
       error = '',
-      errorClassName = '',
       id,
-      inputClassName = '',
-      inputContainerClassName = '',
+      loading = false,
       max,
       min,
       name,
@@ -35,18 +36,22 @@ const NumberInput = memo(
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       scale = 2,
       size = 'md',
       value = '',
    }) => {
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
+      const hasSuffix = useMemo(
+         () => !!loading || (!!clearable && !disabled && value),
+         [loading, clearable, disabled, value],
+      );
       const classNameOptions = {
-         containerClassName,
+         clearable: !!clearable,
          disabled: !!disabled,
          error: !!error,
-         errorClassName,
-         inputClassName,
-         inputContainerClassName,
+         loading: !!loading,
          size,
       };
       const memoizedValue = useMemo(() => {
@@ -89,16 +94,21 @@ const NumberInput = memo(
                   onChange={onChangeInput}
                   onFocus={onFocus}
                   placeholder={placeholder}
-                  ref={ref}
+                  ref={currentRef}
                   type='text'
                   value={memoizedValue}
                />
+               {hasSuffix && (
+                  <div className={inputSuffixClass(classNameOptions)}>
+                     {loading ? (
+                        <Spinner />
+                     ) : (
+                        <ClearButton onChange={onChange} ref={currentRef} />
+                     )}
+                  </div>
+               )}
             </div>
-            {!!error && (
-               <h5 className={errorClass(classNameOptions)} role='alert'>
-                  {error}
-               </h5>
-            )}
+            <ErrorMessage size={size} error={error} />
          </div>
       );
    },
@@ -106,13 +116,11 @@ const NumberInput = memo(
 NumberInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
+   clearable: bool,
    disabled: bool,
    error: string,
-   errorClassName: string,
    id: string,
-   inputClassName: string,
-   inputContainerClassName: string,
+   loading: bool,
    max: any,
    min: any,
    name: string,
@@ -123,7 +131,7 @@ NumberInput.propTypes = {
    placeholder: string,
    ref: oneOfType([func, shape({ current: any })]),
    scale: number,
-   size: oneOf(['large', 'medium', 'small']),
+   size: oneOf(['lg', 'md', 'sm']),
    value: string,
 };
 export default NumberInput;

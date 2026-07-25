@@ -1,5 +1,5 @@
+import clsx from 'clsx';
 import { Fragment } from 'react';
-import styled from 'styled-components';
 import Heading from './Heading';
 import Bold from './Icons/Bold';
 import BulletList from './Icons/BulletList';
@@ -17,56 +17,7 @@ import SuperScript from './Icons/SuperScript';
 import UnderLine from './Icons/Underline';
 import Undo from './Icons/Undo';
 import Tooltip from './Tooltip';
-const StyledToolbar = styled.div`
-   border-left-color: #dedede;
-   border-left-width: 2px;
-   border-radius: 10px 10px 0 0;
-   border-right-color: #dedede;
-   border-right-width: 2px;
-   border-style: solid;
-   border-top-color: #dedede;
-   border-top-width: 2px;
-   display: flex;
-   flex-wrap: wrap;
-   gap: 5px;
-   padding: 5px;
-   & .tool-group {
-      display: flex;
-      gap: 2px;
-      position: relative;
-      &:not(:last-child):before {
-         background-color: #dedede;
-         content: '';
-         height: calc(100% - 4px);
-         position: absolute;
-         right: -3px;
-         top: 2px;
-         width: 1px;
-      }
-      & .editor-toolbar-btn {
-         background-color: transparent;
-         border: none;
-         border-radius: 12px;
-         cursor: pointer;
-         width: 32px;
-         height: 32px;
-         outline: none;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         &[data-active='true'] {
-            background-color: #e2e2e2;
-         }
-         &:hover:not(:disabled) {
-            background-color: #f1f1f1;
-         }
-         &:disabled {
-            cursor: default;
-         }
-      }
-   }
-`;
-const Toolbar = ({ editor, isDisabled = false }) => {
+const Toolbar = ({ editor, disabled = false }) => {
    if (!editor) return null;
    const toolGroups = [
       {
@@ -89,7 +40,7 @@ const Toolbar = ({ editor, isDisabled = false }) => {
          buttons: [
             {
                type: 'heading',
-               component: <Heading editor={editor} isDisabled={isDisabled} />,
+               component: <Heading editor={editor} disabled={disabled} />,
             },
             {
                action: () => editor.chain().focus().toggleBulletList().run(),
@@ -187,27 +138,37 @@ const Toolbar = ({ editor, isDisabled = false }) => {
       },
    ];
    return (
-      <StyledToolbar>
+      <div className='flex flex-wra[ gap-1.25 p-1.25 border-solid border-[#dedede] rounded-t-[10px] border-l-2 border-r-2 border-t-2'>
          {toolGroups.map((group, index) => (
-            <div key={index} className='tool-group'>
+            <div
+               className="flex gap-0.5 relative not-last:before:content-[''] not-last:before:absolute not-last:before:-right-0.75 not-last:before:top-0.5 not-last:before:h-[calc(100%-4px)] not-last:before:w-px not-last:before:bg-[#dedede]"
+               key={index}
+            >
                {group?.buttons?.map((btn, subIndex) => {
+                  const isActive = !!(
+                     btn.active && editor.isActive(btn.active)
+                  );
                   return btn?.type === 'heading' ? (
                      <Fragment key={`${index}_${subIndex}`}>
                         {btn?.component}
                      </Fragment>
                   ) : (
                      <Tooltip
-                        isDisabled={isDisabled}
+                        disabled={disabled}
                         key={`${index}_${subIndex}`}
                         title={btn?.title}
                      >
                         <button
-                           disabled={isDisabled}
+                           disabled={disabled}
                            type='button'
-                           className='editor-toolbar-btn'
-                           data-active={
-                              !!(btn.active && editor.isActive(btn.active))
-                           }
+                           className={clsx(
+                              'cursor-pointer disabled:cursor-default border-none rounded-xl w-8 h-8 outline-none flex items-center justify-center',
+                              'enabled:hover:bg-[#f1f1f1]',
+                              {
+                                 'bg-[#e2e2e2]': isActive,
+                                 'bg-transparent': !isActive,
+                              },
+                           )}
                            onClick={e => {
                               e.preventDefault();
                               btn.action();
@@ -220,7 +181,7 @@ const Toolbar = ({ editor, isDisabled = false }) => {
                })}
             </div>
          ))}
-      </StyledToolbar>
+      </div>
    );
 };
 export default Toolbar;

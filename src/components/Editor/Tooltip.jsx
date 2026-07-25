@@ -13,12 +13,7 @@ import {
    useRole,
 } from '@floating-ui/react';
 import { Fragment, useState } from 'react';
-const Tooltip = ({
-   children,
-   distance = 6,
-   isDisabled = false,
-   title = '',
-}) => {
+const Tooltip = ({ children, distance = 6, disabled = false, title = '' }) => {
    const [isOpen, setIsOpen] = useState(false);
    const { refs, floatingStyles, context } = useFloating({
       middleware: [offset(distance), flip(), shift()],
@@ -27,10 +22,10 @@ const Tooltip = ({
       placement: 'top',
       whileElementsMounted: autoUpdate,
    });
-   const click = useClick(context, { enabled: !isDisabled });
-   const dismiss = useDismiss(context, { enabled: !isDisabled });
-   const focus = useFocus(context, { enabled: !isDisabled });
-   const hover = useHover(context, { move: true, enabled: !isDisabled });
+   const click = useClick(context, { enabled: !disabled });
+   const dismiss = useDismiss(context, { enabled: !disabled });
+   const focus = useFocus(context, { enabled: !disabled });
+   const hover = useHover(context, { move: true, enabled: !disabled });
    const role = useRole(context, { role: 'tooltip' });
    const { getReferenceProps, getFloatingProps } = useInteractions([
       click,

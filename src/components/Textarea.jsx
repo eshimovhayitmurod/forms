@@ -11,18 +11,16 @@ import {
 import { memo } from 'react';
 import {
    containerClass,
-   errorClass,
    textareaClass,
    textareaContainerClass,
 } from './classNames';
+import ErrorMessage from './components/ErrorMessage';
 const Textarea = memo(
    ({
       'aria-label': ariaLabel,
       'data-cy': dataCY,
-      containerClassName = '',
       disabled = false,
       error = '',
-      errorClassName = '',
       id,
       maxLength = 1000,
       name,
@@ -32,15 +30,11 @@ const Textarea = memo(
       placeholder = '',
       ref,
       size = 'md',
-      textareaClassName = 'text',
       value = '',
    }) => {
       const classNameOptions = {
-         containerClassName,
          error: !!error,
-         errorClassName,
          size,
-         textareaClassName,
       };
       return (
          <div className={containerClass(classNameOptions)}>
@@ -61,11 +55,7 @@ const Textarea = memo(
                   value={value}
                />
             </div>
-            {!!error && (
-               <h5 className={errorClass(classNameOptions)} role='alert'>
-                  {error}
-               </h5>
-            )}
+            <ErrorMessage size={size} error={error} />
          </div>
       );
    },
@@ -73,10 +63,8 @@ const Textarea = memo(
 Textarea.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
    disabled: bool,
    error: string,
-   errorClassName: string,
    id: string,
    maxLength: number,
    name: string,
@@ -86,7 +74,6 @@ Textarea.propTypes = {
    placeholder: string,
    ref: oneOfType([func, shape({ current: any })]),
    size: oneOf(['lg', 'md', 'sm']),
-   textareaClassName: string,
    value: string,
 };
 export default Textarea;

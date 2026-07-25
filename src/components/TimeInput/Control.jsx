@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { IMask, IMaskInput } from 'react-imask';
 import {
    containerClass,
@@ -5,8 +6,9 @@ import {
    dropdownInputClass,
    dropdownTriggerClass,
    dropdownTriggerIconClass,
-   errorClass,
 } from '../classNames';
+import ErrorMessage from '../components/ErrorMessage';
+import Clock from '../Icons/Clock';
 const maskOptions = {
    autofix: true,
    blocks: {
@@ -65,6 +67,10 @@ const Control = ({
       errorClassName,
       size,
    };
+   const widthAndHeight = useMemo(() => {
+      const widthAndHeight = size === 'lg' ? 22 : size === 'sm' ? 20 : 22;
+      return widthAndHeight;
+   }, [size]);
    return (
       <div className={containerClass(classNameOptions)}>
          <div
@@ -96,22 +102,11 @@ const Control = ({
                   {...getReferenceProps()}
                   className={dropdownTriggerIconClass(classNameOptions)}
                >
-                  <svg
-                     fill='currentColor'
-                     height={size === 'lg' ? 22 : size === 'sm' ? 20 : 22}
-                     viewBox='0 0 24 24'
-                     width={size === 'lg' ? 22 : size === 'sm' ? 20 : 22}
-                  >
-                     <path d='M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.00917,8.00917,0,0,1,12,20Zm1-8.251V7a1,1,0,0,0-2,0v5a1.00586,1.00586,0,0,0,.11816.47217l1.5,2.79883a1.00029,1.00029,0,0,0,1.76368-.94434Z' />
-                  </svg>
+                  <Clock height={widthAndHeight} width={widthAndHeight} />
                </div>
             </div>
          </div>
-         {!!error && (
-            <h5 className={errorClass(classNameOptions)} role='alert'>
-               {error}
-            </h5>
-         )}
+         <ErrorMessage size={size} error={error} />
       </div>
    );
 };

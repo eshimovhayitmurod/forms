@@ -6,10 +6,10 @@ import {
    dropdownInputClass,
    dropdownTriggerClass,
    dropdownTriggerIconClass,
-   errorClass,
 } from '../classNames';
-import dateFormatter from './dateFormatter';
-import Down from './Icons/Down';
+import ErrorMessage from '../components/ErrorMessage';
+import dateFormatter from '../helpers/dateFormatter';
+import Down from '../Icons/Down';
 const Control = ({
    ariaLabel,
    containerClassName = '',
@@ -127,11 +127,7 @@ const Control = ({
                </div>
             </div>
          </div>
-         {!!error && (
-            <h5 className={errorClass(classNameOptions)} role='alert'>
-               {error}
-            </h5>
-         )}
+         <ErrorMessage size={size} error={error} />
       </div>
    );
 };

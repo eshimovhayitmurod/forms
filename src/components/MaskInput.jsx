@@ -1,12 +1,15 @@
 import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useRef } from 'react';
 import { IMaskInput } from 'react-imask';
 import {
    containerClass,
-   errorClass,
    inputClass,
    inputContainerClass,
+   inputSuffixClass,
 } from './classNames';
+import ClearButton from './components/ClearButton';
+import ErrorMessage from './components/ErrorMessage';
+import Spinner from './components/Spinner';
 const types = [
    {
       mask: '00000000000000000000',
@@ -54,30 +57,32 @@ const MaskInput = memo(
    ({
       'aria-label': ariaLabel,
       'data-cy': dataCY,
-      containerClassName = '',
+      clearable = false,
       disabled = false,
       error = '',
-      errorClassName = '',
       id,
-      inputClassName = '',
-      inputContainerClassName = '',
+      loading = false,
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       size = 'md',
       type = 'tin',
       value = '',
    }) => {
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
+      const hasSuffix = useMemo(
+         () => !!loading || (!!clearable && !disabled && value),
+         [loading, clearable, disabled, value],
+      );
       const classNameOptions = {
-         containerClassName,
+         clearable: !!clearable,
          disabled: !!disabled,
          error: !!error,
-         errorClassName,
-         inputClassName,
-         inputContainerClassName,
+         loading: !!loading,
          size,
       };
       const inputMode = useMemo(
@@ -108,7 +113,7 @@ const MaskInput = memo(
                   disabled={disabled}
                   id={id}
                   inputMode={inputMode}
-                  inputRef={ref}
+                  inputRef={currentRef}
                   mask={mask}
                   name={name}
                   onBlur={onBlur}
@@ -120,12 +125,17 @@ const MaskInput = memo(
                      onChange(transform(value), { event });
                   }}
                />
+               {hasSuffix && (
+                  <div className={inputSuffixClass(classNameOptions)}>
+                     {loading ? (
+                        <Spinner />
+                     ) : (
+                        <ClearButton onChange={onChange} ref={currentRef} />
+                     )}
+                  </div>
+               )}
             </div>
-            {!!error && (
-               <h5 className={errorClass(classNameOptions)} role='alert'>
-                  {error}
-               </h5>
-            )}
+            <ErrorMessage size={size} error={error} />
          </div>
       );
    },
@@ -133,20 +143,18 @@ const MaskInput = memo(
 MaskInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
+   clearable: bool,
    disabled: bool,
    error: string,
-   errorClassName: string,
    id: string,
-   inputClassName: string,
-   inputContainerClassName: string,
+   loading: bool,
    name: string,
    onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
    ref: oneOfType([func, shape({ current: any })]),
-   size: oneOf(['large', 'medium', 'small']),
+   size: oneOf(['lg', 'md', 'sm']),
    type: oneOf(typesList),
    value: string,
 };

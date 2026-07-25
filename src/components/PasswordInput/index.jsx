@@ -6,10 +6,10 @@ import {
    dropdownInputClass,
    dropdownTriggerClass,
    dropdownTriggerIconClass,
-   errorClass,
 } from '../classNames';
-import Close from './Icons/Close';
-import Open from './Icons/Open';
+import ErrorMessage from '../components/ErrorMessage';
+import Close from '../Icons/Close';
+import Open from '../Icons/Open';
 const PasswordInput = memo(
    ({
       'aria-label': ariaLabel,
@@ -80,11 +80,7 @@ const PasswordInput = memo(
                   </button>
                </div>
             </div>
-            {!!error && (
-               <h5 className={errorClass(classNameOptions)} role='alert'>
-                  {error}
-               </h5>
-            )}
+            <ErrorMessage size={size} error={error} />
          </div>
       );
    },

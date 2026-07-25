@@ -1,4 +1,4 @@
-const UploadIcon = () => (
+const Upload = () => (
    <svg width='48' height='40' viewBox='0 0 24 20'>
       <g
          fill='none'
@@ -14,4 +14,4 @@ const UploadIcon = () => (
       </g>
    </svg>
 );
-export default UploadIcon;
+export default Upload;

@@ -1,4 +1,8 @@
 :root {
+   /* CLEAR BUTTON AND LOADING THEME */
+   --input-loading-spinner-color: #3a79f3;
+   --input-suffix-color: #949494;
+   --input-suffix-hover-and-focus-bg: #e5e5e5;
    /* INPUT THEME */
 
    --input-bg-color: #ffffff;
@@ -53,8 +57,6 @@
 
    /* DATE INPUT THEME */
 
-   /* TIME INPUT THEME */
-
    /* EDITOR THEME */
 }
 .react-colorful {
@@ -83,4 +85,73 @@
 .react-colorful__alpha-pointer {
    height: 20px !important;
    width: 20px !important;
+}
+
+/* ===== SPINNER ANIMATION ===== */
+
+@keyframes spinnerClip {
+   0% {
+      clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 50% 50%, 0% 0%, 0% 0%, 0% 0%);
+   }
+   50% {
+      clip-path: polygon(
+         0% 0%,
+         0% 100%,
+         0% 100%,
+         50% 50%,
+         100% 0%,
+         100% 0%,
+         0% 0%
+      );
+   }
+   100% {
+      clip-path: polygon(
+         0% 0%,
+         0% 100%,
+         100% 100%,
+         50% 50%,
+         100% 100%,
+         100% 0%,
+         0% 0%
+      );
+   }
+}
+@keyframes spinnerRotate {
+   to {
+      transform: rotate(1turn);
+   }
+}
+.spinner-animation {
+   animation:
+      spinnerClip 0.7s linear alternate infinite,
+      spinnerRotate 0.3s linear infinite;
+}
+
+@keyframes indeterminate-1 {
+   0% {
+      left: -35%;
+      right: 100%;
+   }
+   60% {
+      left: 100%;
+      right: -90%;
+   }
+   100% {
+      left: 100%;
+      right: -90%;
+   }
+}
+@keyframes indeterminate-2 {
+   0% {
+      left: -200%;
+      right: 100%;
+   }
+   60% {
+      left: 107%;
+      right: -8%;
+   }
+   100% {
+      left: 107%;
+      right: -8%;
+   }
 }

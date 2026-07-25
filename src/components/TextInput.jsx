@@ -8,41 +8,46 @@ import {
    shape,
    string,
 } from 'prop-types';
-import { memo } from 'react';
+import { memo, useMemo, useRef } from 'react';
 import {
    containerClass,
-   errorClass,
    inputClass,
    inputContainerClass,
+   inputSuffixClass,
 } from './classNames';
+import ClearButton from './components/ClearButton';
+import ErrorMessage from './components/ErrorMessage';
+import Spinner from './components/Spinner';
 const TextInput = memo(
    ({
       'aria-label': ariaLabel,
-      'data-cy': dataCY = '',
-      containerClassName = '',
+      'data-cy': dataCY,
+      clearable = false,
       disabled = false,
       error = '',
-      errorClassName = '',
       id,
-      inputClassName = '',
-      inputContainerClassName = '',
+      loading = false,
       maxLength = 255,
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       size = 'md',
       value = '',
    }) => {
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
+      const hasSuffix = useMemo(
+         () => !!loading || (!!clearable && !disabled && value),
+         [loading, clearable, disabled, value],
+      );
       const classNameOptions = {
-         containerClassName,
+         clearable: !!clearable,
          disabled: !!disabled,
          error: !!error,
-         errorClassName,
-         inputClassName,
-         inputContainerClassName,
+         loading: !!loading,
          size,
       };
       return (
@@ -60,16 +65,21 @@ const TextInput = memo(
                   onChange={event => onChange(event.target.value, { event })}
                   onFocus={onFocus}
                   placeholder={placeholder}
-                  ref={ref}
+                  ref={currentRef}
                   type='text'
                   value={value}
                />
+               {hasSuffix && (
+                  <div className={inputSuffixClass(classNameOptions)}>
+                     {loading ? (
+                        <Spinner />
+                     ) : (
+                        <ClearButton onChange={onChange} ref={currentRef} />
+                     )}
+                  </div>
+               )}
             </div>
-            {!!error && (
-               <h5 className={errorClass(classNameOptions)} role='alert'>
-                  {error}
-               </h5>
-            )}
+            <ErrorMessage size={size} error={error} />
          </div>
       );
    },
@@ -77,13 +87,11 @@ const TextInput = memo(
 TextInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
+   clearable: bool,
    disabled: bool,
    error: string,
-   errorClassName: string,
    id: string,
-   inputClassName: string,
-   inputContainerClassName: string,
+   loading: bool,
    maxLength: number,
    name: string,
    onBlur: func,

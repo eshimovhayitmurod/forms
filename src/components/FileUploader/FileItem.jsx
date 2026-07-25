@@ -1,6 +1,6 @@
 import { array, bool, func, number, string } from 'prop-types';
 import { memo, useCallback, useMemo } from 'react';
-import { prettyFileSize } from './helpers';
+import prettyFileSize from '../helpers/prettyFileSize';
 const FileItem = memo(
    ({
       index = 0,

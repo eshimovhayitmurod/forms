@@ -1,14 +1,15 @@
 import { any, bool, func, number, object, string } from 'prop-types';
 import { memo, useCallback, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
+import ErrorMessage from '../components/ErrorMessage';
+import prettyFileSize from '../helpers/prettyFileSize';
+import Upload from '../Icons/Upload';
 import FileItem from './FileItem';
-import { prettyFileSize } from './helpers';
-import UploadIcon from './UploadIcon';
 const FileUploader = memo(
    ({
       accept,
-      isDisabled = false,
-      isError = false,
+      error = '',
+      disabled = false,
       maxFiles = 10,
       maxSize = 20971520,
       minSize = 0,
@@ -16,13 +17,14 @@ const FileUploader = memo(
       onChange,
       value = [],
    }) => {
+      const isError = !!error;
       const memoizedValue = useMemo(
          () => (Array.isArray(value) ? value : []),
          [value],
       );
       const onDrop = useCallback(
          files => {
-            if (!isDisabled && typeof onChange === 'function') {
+            if (!disabled && typeof onChange === 'function') {
                const merged = [...memoizedValue, ...files];
                const unique = [];
                const seen = new Set();
@@ -37,11 +39,11 @@ const FileUploader = memo(
                onChange(newValue);
             }
          },
-         [onChange, isDisabled, memoizedValue, maxFiles],
+         [onChange, disabled, memoizedValue, maxFiles],
       );
-      const disabled = useMemo(
-         () => isDisabled || memoizedValue?.length >= maxFiles,
-         [isDisabled, memoizedValue, maxFiles],
+      const isDisabled = useMemo(
+         () => disabled || memoizedValue?.length >= maxFiles,
+         [disabled, memoizedValue, maxFiles],
       );
       const { getRootProps, getInputProps, isDragActive } = useDropzone({
          accept,
@@ -79,65 +81,68 @@ const FileUploader = memo(
          return uploaderClass;
       }, [disabled, isError, isDragActive]);
       return (
-         <div className='border-2 border-(--file-uploader-border-color) rounded-[14px] p-2'>
-            <div className='grid grid-cols-1 gap-2'>
-               <div {...getRootProps()} className={uploaderClass}>
-                  <input
-                     {...getInputProps()}
-                     multiple={maxFiles > 1}
-                     name={name}
-                  />
-                  <div className='font-medium'>
-                     {isDragActive ? (
-                        <p className='text-[20px] text-(--file-uploader-main-text-color)'>
-                           Drop the files here ...
-                        </p>
-                     ) : (
-                        <div className='grid grid-cols-1 gap-2'>
-                           <div className='flex items-center justify-center text-(--file-uploader-subtitle-color) pb-3'>
-                              <UploadIcon />
-                           </div>
+         <div className='grid grid-cols-1 gap-1'>
+            <div className='border-2 border-(--file-uploader-border-color) rounded-[14px] p-2'>
+               <div className='grid grid-cols-1 gap-2'>
+                  <div {...getRootProps()} className={uploaderClass}>
+                     <input
+                        {...getInputProps()}
+                        multiple={maxFiles > 1}
+                        name={name}
+                     />
+                     <div className='font-medium'>
+                        {isDragActive ? (
                            <p className='text-[20px] text-(--file-uploader-main-text-color)'>
-                              Click to upload or drag and drop
+                              Drop the files here ...
                            </p>
-                           <p className='text-(--file-uploader-subtitle-color) text-[13px]'>
-                              {maxFileSize + ' max file size'}
-                           </p>
-                           {accept && (
-                              <p className='text-(--file-uploader-subtitle-color) text-[13px]'>
-                                 Allowed file formats: {allowedFormats}
+                        ) : (
+                           <div className='grid grid-cols-1 gap-2'>
+                              <div className='flex items-center justify-center text-(--file-uploader-subtitle-color) pb-3'>
+                                 <Upload />
+                              </div>
+                              <p className='text-[20px] text-(--file-uploader-main-text-color)'>
+                                 Click to upload or drag and drop
                               </p>
-                           )}
-                        </div>
-                     )}
+                              <p className='text-(--file-uploader-subtitle-color) text-[13px]'>
+                                 {maxFileSize + ' max file size'}
+                              </p>
+                              {accept && (
+                                 <p className='text-(--file-uploader-subtitle-color) text-[13px]'>
+                                    Allowed file formats: {allowedFormats}
+                                 </p>
+                              )}
+                           </div>
+                        )}
+                     </div>
                   </div>
+                  {hasValue && (
+                     <div>
+                        <ul className='grid grid-cols-1 gap-2'>
+                           {memoizedValue.map((file, index) => (
+                              <FileItem
+                                 isEnabled={!isDisabled}
+                                 index={index}
+                                 key={index}
+                                 name={file?.name}
+                                 onChange={onChange}
+                                 size={file?.size}
+                                 value={memoizedValue}
+                              />
+                           ))}
+                        </ul>
+                     </div>
+                  )}
                </div>
-               {hasValue && (
-                  <div>
-                     <ul className='grid grid-cols-1 gap-2'>
-                        {memoizedValue.map((file, index) => (
-                           <FileItem
-                              isEnabled={!isDisabled}
-                              index={index}
-                              key={index}
-                              name={file?.name}
-                              onChange={onChange}
-                              size={file?.size}
-                              value={memoizedValue}
-                           />
-                        ))}
-                     </ul>
-                  </div>
-               )}
             </div>
+            <ErrorMessage size='md' error={error} />
          </div>
       );
    },
 );
 FileUploader.propTypes = {
    accept: object,
-   isDisabled: bool,
-   isError: bool,
+   disabled: bool,
+   error: string,
    maxSize: number,
    minSize: number,
    name: string,

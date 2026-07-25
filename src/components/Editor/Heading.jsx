@@ -18,7 +18,7 @@ const options = [
    { level: 5, label: 'Heading 5' },
    { level: 6, label: 'Heading 6' },
 ];
-const Heading = ({ editor, isDisabled = false }) => {
+const Heading = ({ editor, disabled = false }) => {
    const listRef = useRef([]);
    const [activeIndex, setActiveIndex] = useState(0);
    const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ const Heading = ({ editor, isDisabled = false }) => {
       initial: { opacity: 0, transform: 'scale(0.7)' },
       open: { opacity: 1, transform: 'scale(1)' },
    });
-   const click = useClick(context, { enabled: !isDisabled });
+   const click = useClick(context, { enabled: !disabled });
    const dismiss = useDismiss(context);
    const role = useRole(context, { role: 'listbox' });
    const listNavigation = useListNavigation(context, {
@@ -58,7 +58,7 @@ const Heading = ({ editor, isDisabled = false }) => {
             aria-haspopup='listbox'
             className='not-disabled:hover:bg-[#f1f1f1] data-[active=true]:bg-[#e2e2e2] disabled:bg-transparent text-[#292b32] rounded-[10px] cursor-pointer items-center flex text-[14px] font-medium outline-none border-none pl-2.5 pr-0.5'
             data-active={!!editor.isActive('heading')}
-            disabled={isDisabled}
+            disabled={disabled}
             type='button'
             ref={node => {
                refs.setReference(node);

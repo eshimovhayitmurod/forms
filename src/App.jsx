@@ -16,7 +16,7 @@ import {
    TextInput,
    TimeInput,
 } from './components';
-import './components/theme.css';
+import './components/forms.css';
 import './index.css';
 import './style.css';
 const options = [
@@ -25,16 +25,20 @@ const options = [
    { label: 'Label 3', value: 3 },
 ];
 const App = () => {
+   const [clear, setClear] = useState(false);
    const [color, setColor] = useState('');
    const [count, setCount] = useState('');
    const [date, setDate] = useState('');
+   const [disabled, setDisabled] = useState(false);
    const [editor, setEditor] = useState('');
    const [files, setFiles] = useState([]);
+   const [loading, setLoading] = useState(false);
    const [mask, setMask] = useState('');
    const [otp, setOTP] = useState('');
    const [password, setPassword] = useState('');
    const [phone, setPhone] = useState('');
    const [select, setSelect] = useState(null);
+   const [size, setSize] = useState('md');
    const [stars, setStars] = useState(0);
    const [text, setText] = useState('');
    const [textarea, setTextarea] = useState('');
@@ -61,20 +65,93 @@ const App = () => {
                Inputs
             </div>
             <div className='py-2 w-75'>
+               <div>
+                  <span>Size: </span>
+                  <select
+                     value={size}
+                     onChange={e => setSize(e?.target?.value)}
+                  >
+                     <option value='sm'>Small</option>
+                     <option selected value='md'>
+                        Medium
+                     </option>
+                     <option value='lg'>Large</option>
+                  </select>
+               </div>
+            </div>
+            <div className='py-2 w-75'>
+               <div>
+                  <span>Loading: </span>
+                  <input
+                     onChange={e => setLoading(e.target.checked)}
+                     type='checkbox'
+                     value={loading}
+                  />
+               </div>
+            </div>
+            <div className='py-2 w-75'>
+               <div>
+                  <span>Clear button: </span>
+                  <input
+                     onChange={e => setClear(e.target.checked)}
+                     type='checkbox'
+                     value={clear}
+                  />
+               </div>
+            </div>
+            <div className='py-2 w-75'>
+               <div>
+                  <span>Disabled: </span>
+                  <input
+                     onChange={e => setDisabled(e.target.checked)}
+                     type='checkbox'
+                     value={disabled}
+                  />
+               </div>
+            </div>
+            <div className='py-2 w-75'>
                <Label>Text input</Label>
-               <TextInput onChange={setText} value={text} />
+               <TextInput
+                  clearable={clear}
+                  disabled={disabled}
+                  loading={loading}
+                  onChange={setText}
+                  size={size}
+                  value={text}
+               />
             </div>
             <div className='py-2 w-75'>
                <Label>Phone input</Label>
-               <PhoneInput onChange={setPhone} value={phone} />
+               <PhoneInput
+                  clearable={clear}
+                  disabled={disabled}
+                  loading={loading}
+                  onChange={setPhone}
+                  size={size}
+                  value={phone}
+               />
             </div>
             <div className='py-2 w-75'>
                <Label>Number input</Label>
-               <NumberInput onChange={setCount} value={count} />
+               <NumberInput
+                  clearable={clear}
+                  disabled={disabled}
+                  loading={loading}
+                  onChange={setCount}
+                  size={size}
+                  value={count}
+               />
             </div>
             <div className='py-2 w-75'>
                <Label>Mask input</Label>
-               <MaskInput onChange={setMask} value={mask} />
+               <MaskInput
+                  clearable={clear}
+                  disabled={disabled}
+                  loading={loading}
+                  onChange={setMask}
+                  size={size}
+                  value={mask}
+               />
             </div>
             <div className='py-2 w-75'>
                <Label>Date input</Label>

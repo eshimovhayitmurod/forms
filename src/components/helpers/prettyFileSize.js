@@ -1,4 +1,4 @@
-export const prettyFileSize = (size, si = false, dp = 1) => {
+const prettyFileSize = (size, si = false, dp = 1) => {
    const thresh = si ? 1000 : 1024;
    if (Math.abs(size) < thresh) {
       return size + ' B';
@@ -17,3 +17,4 @@ export const prettyFileSize = (size, si = false, dp = 1) => {
    );
    return size.toFixed(dp) + ' ' + units[u];
 };
+export default prettyFileSize;

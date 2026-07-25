@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
 import { dropdownMenuClass } from '../classNames';
-import Next from './Icons/Next';
-import Prev from './Icons/Prev';
+import Next from '../Icons/Next';
+import Prev from '../Icons/Prev';
 const StyledCalendar = styled.div`
    & .react-calendar {
       border: none;
