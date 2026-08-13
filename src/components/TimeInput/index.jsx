@@ -8,25 +8,23 @@ const TimeInput = memo(
    ({
       'aria-label': ariaLabel,
       'data-cy': dataCY,
-      containerClassName = '',
+      clearable = false,
       disabled = false,
-      dropdownContainerClassName = '',
-      dropdownInputClassName = '',
-      dropdownTriggerClassName = '',
-      dropdownTriggerIconClassName = '',
       error = '',
-      errorClassName = '',
       id,
+      loading = false,
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       seconds = true,
       size = 'md',
       value,
    }) => {
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
       const listRef = useRef([]);
       const optionsCount = options?.length;
       const {
@@ -51,23 +49,19 @@ const TimeInput = memo(
          <Fragment>
             <Control
                ariaLabel={ariaLabel}
-               containerClassName={containerClassName}
+               clearable={clearable}
                dataCY={dataCY}
                disabled={disabled}
-               dropdownContainerClassName={dropdownContainerClassName}
-               dropdownInputClassName={dropdownInputClassName}
-               dropdownTriggerClassName={dropdownTriggerClassName}
-               dropdownTriggerIconClassName={dropdownTriggerIconClassName}
                error={error}
-               errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
                id={id}
+               loading={loading}
                name={name}
                onBlur={onBlur}
                onChange={onChange}
                onFocus={onFocus}
                placeholder={placeholder}
-               ref={ref}
+               ref={currentRef}
                refs={refs}
                seconds={seconds}
                size={size}
@@ -95,14 +89,8 @@ const TimeInput = memo(
 TimeInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
    disabled: bool,
-   dropdownContainerClassName: string,
-   dropdownInputClassName: string,
-   dropdownTriggerClassName: string,
-   dropdownTriggerIconClassName: string,
    error: string,
-   errorClassName: string,
    id: string,
    name: string,
    onChange: func,

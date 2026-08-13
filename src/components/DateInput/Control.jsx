@@ -7,20 +7,16 @@ import {
    dropdownTriggerClass,
    dropdownTriggerIconClass,
 } from '../classNames';
+import ClearButton from '../components/ClearButton';
 import ErrorMessage from '../components/ErrorMessage';
+import Spinner from '../components/Spinner';
 import dateFormatter from '../helpers/dateFormatter';
 import Down from '../Icons/Down';
 const Control = ({
    ariaLabel,
-   containerClassName = '',
    dataCY,
    disabled = false,
-   dropdownContainerClassName = '',
-   dropdownInputClassName = '',
-   dropdownTriggerClassName = '',
-   dropdownTriggerIconClassName = '',
    error = '',
-   errorClassName = '',
    getReferenceProps,
    max,
    min,
@@ -34,16 +30,19 @@ const Control = ({
    size = 'md',
    value = '',
    id,
+   clearable = false,
+   loading = false,
 }) => {
+   const hasSuffix = useMemo(
+      () => !!loading || (!!clearable && !disabled && value),
+      [loading, clearable, disabled, value],
+   );
    const classNameOptions = {
-      containerClassName,
+      clearable: !!clearable,
       disabled: !!disabled,
-      dropdownContainerClassName,
-      dropdownInputClassName,
-      dropdownTriggerClassName,
-      dropdownTriggerIconClassName,
       error: !!error,
-      errorClassName,
+      hasSuffix,
+      loading: !!loading,
       size,
    };
    const memoizedValue = useMemo(() => {
@@ -119,6 +118,14 @@ const Control = ({
                }}
             />
             <div className={dropdownTriggerClass(classNameOptions)}>
+               {hasSuffix &&
+                  (loading ? (
+                     <div className='w-6 h-6 flex items-center justify-center'>
+                        <Spinner />
+                     </div>
+                  ) : (
+                     <ClearButton onChange={onChange} ref={ref} />
+                  ))}
                <div
                   {...getReferenceProps()}
                   className={dropdownTriggerIconClass(classNameOptions)}

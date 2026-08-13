@@ -1,5 +1,5 @@
 import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
-import { memo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import {
    containerClass,
    dropdownContainerClass,
@@ -7,43 +7,42 @@ import {
    dropdownTriggerClass,
    dropdownTriggerIconClass,
 } from '../classNames';
+import ClearButton from '../components/ClearButton';
 import ErrorMessage from '../components/ErrorMessage';
+import Spinner from '../components/Spinner';
 import Close from '../Icons/Close';
 import Open from '../Icons/Open';
 const PasswordInput = memo(
    ({
       'aria-label': ariaLabel,
       'data-cy': dataCY,
-      containerClassName = '',
+      clearable = false,
       disabled = false,
-      dropdownContainerClassName = '',
-      dropdownInputClassName = '',
-      dropdownTriggerClassName = '',
-      dropdownTriggerIconClassName = '',
       error = '',
-      errorClassName = '',
       id,
+      loading = false,
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       size = 'md',
       value = '',
    }) => {
       const [type, setType] = useState(false);
-      const currentRef = useRef(null);
-      const innerRef = ref ? ref : currentRef;
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
+      const hasSuffix = useMemo(
+         () => !!loading || (!!clearable && !disabled && value),
+         [loading, clearable, disabled, value],
+      );
       const classNameOptions = {
-         containerClassName,
+         clearable: !!clearable,
          disabled: !!disabled,
-         dropdownContainerClassName,
-         dropdownInputClassName,
-         dropdownTriggerClassName,
-         dropdownTriggerIconClassName,
          error: !!error,
-         errorClassName,
+         hasSuffix,
+         loading: !!loading,
          size,
       };
       return (
@@ -60,19 +59,27 @@ const PasswordInput = memo(
                   onChange={event => onChange(event.target.value, { event })}
                   onFocus={onFocus}
                   placeholder={placeholder}
-                  ref={innerRef}
+                  ref={currentRef}
                   type={type ? 'text' : 'password'}
                   value={value}
                />
                <div className={dropdownTriggerClass(classNameOptions)}>
+                  {hasSuffix &&
+                     (loading ? (
+                        <div className='w-6 h-6 flex items-center justify-center'>
+                           <Spinner />
+                        </div>
+                     ) : (
+                        <ClearButton onChange={onChange} ref={currentRef} />
+                     ))}
                   <button
                      className={dropdownTriggerIconClass(classNameOptions)}
                      disabled={disabled}
                      type='button'
                      onClick={() => {
                         setType(!type);
-                        if (innerRef?.current) {
-                           innerRef.current.focus();
+                        if (currentRef?.current) {
+                           currentRef.current.focus();
                         }
                      }}
                   >
@@ -88,14 +95,8 @@ const PasswordInput = memo(
 PasswordInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
    disabled: bool,
-   dropdownContainerClassName: string,
-   dropdownInputClassName: string,
-   dropdownTriggerClassName: string,
-   dropdownTriggerIconClassName: string,
    error: string,
-   errorClassName: string,
    id: string,
    name: string,
    onBlur: func,

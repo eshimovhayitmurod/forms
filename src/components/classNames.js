@@ -146,7 +146,6 @@ export const textareaClass = ({ size = 'md' }) => {
 
 export const dropdownContainerClass = ({
    disabled = false,
-   dropdownContainerClassName = '',
    error = false,
    size = 'md',
 }) => {
@@ -166,14 +165,28 @@ export const dropdownContainerClass = ({
          'h-12 rounded-[12px]': size === 'lg',
          'h-10 rounded-[9px]': size === 'sm',
       },
-      dropdownContainerClassName,
    );
 };
-export const dropdownInputClass = ({
-   dropdownInputClassName = '',
-   size = 'md',
-}) => {
+export const dropdownInputClass = ({ size = 'md', hasSuffix = false }) => {
+   const suffixWidth =
+      !size || size === 'md'
+         ? 'w-[calc(100%-66px)]'
+         : size === 'lg'
+           ? 'w-[calc(100%-66px)]'
+           : size === 'sm'
+             ? 'w-[calc(100%-64px)]'
+             : 'w-[calc(100%-66px)]';
+   const noSuffixWidth =
+      !size || size === 'md'
+         ? 'w-[calc(100%-44px)]'
+         : size === 'lg'
+           ? 'w-[calc(100%-44px)]'
+           : size === 'sm'
+             ? 'w-[calc(100%-42px)]'
+             : 'w-[calc(100%-44px)]';
+   const width = hasSuffix ? suffixWidth : noSuffixWidth;
    return clsx(
+      width,
       'h-full border-none outline-none font-medium',
 
       'bg-transparent',
@@ -186,32 +199,30 @@ export const dropdownInputClass = ({
       'disabled:cursor-default disabled:truncate',
 
       {
-         'w-[calc(100%-42px)] rounded-[10px] text-[16px] pl-3.75':
-            !size || size === 'md',
-         'w-[calc(100%-42px)] rounded-[12px] text-[18px] pl-4.5': size === 'lg',
-         'w-[calc(100%-36px)] rounded-[9px] text-[16px] pl-3': size === 'sm',
+         'rounded-[10px] text-[16px] pl-3.75': !size || size === 'md',
+         'rounded-[12px] text-[18px] pl-4.5': size === 'lg',
+         'rounded-[9px] text-[16px] pl-3': size === 'sm',
       },
-      dropdownInputClassName,
    );
 };
-export const dropdownTriggerClass = ({
-   dropdownTriggerClassName = '',
-   size = 'md',
-}) => {
+export const dropdownTriggerClass = ({ size = 'md', hasSuffix = false }) => {
+   const suffixWidth =
+      size === 'md' || size === 'lg' || !size ? 'w-16' : 'w-15.5';
+   const noSuffixWidth =
+      size === 'md' || size === 'lg' || !size ? 'w-11' : 'w-10.5';
+   const width = hasSuffix ? suffixWidth : noSuffixWidth;
    return clsx(
+      width,
       'h-full flex items-center justify-center rounded-[20px] select-none',
-      {
-         'w-11': size === 'md' || size === 'lg' || !size,
-         'w-8': size === 'sm',
-      },
-      dropdownTriggerClassName,
    );
 };
-export const dropdownTriggerIconClass = ({
-   disabled = false,
-   dropdownTriggerIconClassName = '',
-   size = 'md',
-}) => {
+export const dropdownSuffixClass = ({ size = 'md' }) => {
+   return clsx('flex items-center justify-center rounded-[20px] select-none', {
+      'h-8 w-8': size === 'md' || size === 'lg' || !size,
+      'h-7 w-7': size === 'sm',
+   });
+};
+export const dropdownTriggerIconClass = ({ disabled = false, size = 'md' }) => {
    return clsx(
       'bg-transparent text-[#808080] rounded-full flex items-center justify-center outline-none border-none',
       {
@@ -222,7 +233,6 @@ export const dropdownTriggerIconClass = ({
          'h-8 w-8': size === 'md' || size === 'lg' || !size,
          'h-7 w-7': size === 'sm',
       },
-      dropdownTriggerIconClassName,
    );
 };
 export const dropdownMenuClass = () => {

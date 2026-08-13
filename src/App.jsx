@@ -43,6 +43,12 @@ const App = () => {
    const [text, setText] = useState('');
    const [textarea, setTextarea] = useState('');
    const [time, setTime] = useState('');
+   const commonOptions = {
+      clearable: clear,
+      disabled,
+      size,
+      loading,
+   };
    return (
       <Fragment>
          <div className='flex flex-col items-center justify-center w-full'>
@@ -110,64 +116,52 @@ const App = () => {
                </div>
             </div>
             <div className='py-2 w-75'>
-               <Label>Text input</Label>
-               <TextInput
-                  clearable={clear}
-                  disabled={disabled}
-                  loading={loading}
-                  onChange={setText}
-                  size={size}
-                  value={text}
+               <Label>Date input</Label>
+               <DateInput {...commonOptions} onChange={setDate} value={date} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Color input</Label>
+               <ColorInput
+                  {...commonOptions}
+                  onChange={setColor}
+                  value={color}
                />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Password input</Label>
+               <PasswordInput
+                  {...commonOptions}
+                  onChange={setPassword}
+                  value={password}
+               />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Time input</Label>
+               <TimeInput {...commonOptions} onChange={setTime} value={time} />
+            </div>
+            <div className='py-2 w-75'>
+               <Label>Text input</Label>
+               <TextInput {...commonOptions} onChange={setText} value={text} />
             </div>
             <div className='py-2 w-75'>
                <Label>Phone input</Label>
                <PhoneInput
-                  clearable={clear}
-                  disabled={disabled}
-                  loading={loading}
+                  {...commonOptions}
                   onChange={setPhone}
-                  size={size}
                   value={phone}
                />
             </div>
             <div className='py-2 w-75'>
                <Label>Number input</Label>
                <NumberInput
-                  clearable={clear}
-                  disabled={disabled}
-                  loading={loading}
+                  {...commonOptions}
                   onChange={setCount}
-                  size={size}
                   value={count}
                />
             </div>
             <div className='py-2 w-75'>
                <Label>Mask input</Label>
-               <MaskInput
-                  clearable={clear}
-                  disabled={disabled}
-                  loading={loading}
-                  onChange={setMask}
-                  size={size}
-                  value={mask}
-               />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Date input</Label>
-               <DateInput onChange={setDate} value={date} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Color input</Label>
-               <ColorInput onChange={setColor} value={color} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Password input</Label>
-               <PasswordInput onChange={setPassword} value={password} />
-            </div>
-            <div className='py-2 w-75'>
-               <Label>Time input</Label>
-               <TimeInput onChange={setTime} value={time} />
+               <MaskInput {...commonOptions} onChange={setMask} value={mask} />
             </div>
             <div className='py-2 w-75'>
                <Label>Select</Label>

@@ -1,5 +1,5 @@
 import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
-import { Fragment, memo } from 'react';
+import { Fragment, memo, useRef } from 'react';
 import Control from './Control';
 import Menu from './Menu';
 import useDropdown from './useDropdown';
@@ -7,24 +7,22 @@ const ColorInput = memo(
    ({
       'aria-label': ariaLabel,
       'data-cy': dataCY,
-      containerClassName = '',
+      clearable = false,
       disabled = false,
-      dropdownContainerClassName = '',
-      dropdownInputClassName = '',
-      dropdownTriggerClassName = '',
-      dropdownTriggerIconClassName = '',
       error = '',
-      errorClassName = '',
       id,
+      loading = false,
       name,
       onBlur,
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       size = 'md',
       value,
    }) => {
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
       const {
          context,
          floatingStyles,
@@ -37,23 +35,19 @@ const ColorInput = memo(
          <Fragment>
             <Control
                ariaLabel={ariaLabel}
-               containerClassName={containerClassName}
+               clearable={clearable}
                dataCY={dataCY}
                disabled={disabled}
-               dropdownContainerClassName={dropdownContainerClassName}
-               dropdownInputClassName={dropdownInputClassName}
-               dropdownTriggerClassName={dropdownTriggerClassName}
-               dropdownTriggerIconClassName={dropdownTriggerIconClassName}
                error={error}
-               errorClassName={errorClassName}
                getReferenceProps={getReferenceProps}
                id={id}
+               loading={loading}
                name={name}
                onBlur={onBlur}
                onChange={onChange}
                onFocus={onFocus}
                placeholder={placeholder}
-               ref={ref}
+               ref={currentRef}
                refs={refs}
                size={size}
                value={value}
@@ -74,14 +68,8 @@ const ColorInput = memo(
 ColorInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
-   containerClassName: string,
    disabled: bool,
-   dropdownContainerClassName: string,
-   dropdownInputClassName: string,
-   dropdownTriggerClassName: string,
-   dropdownTriggerIconClassName: string,
    error: string,
-   errorClassName: string,
    id: string,
    name: string,
    onBlur: func,
