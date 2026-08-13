@@ -68,9 +68,11 @@ const ColorInput = memo(
 ColorInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
+   clearable: bool,
    disabled: bool,
    error: string,
    id: string,
+   loading: bool,
    name: string,
    onBlur: func,
    onChange: func,

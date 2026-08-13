@@ -1,4 +1,4 @@
-import { any, bool, func, oneOfType, shape, string } from 'prop-types';
+import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
 import { Fragment, memo, useEffect, useRef } from 'react';
 import { options } from './constants';
 import Control from './Control';
@@ -89,14 +89,19 @@ const TimeInput = memo(
 TimeInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
+   clearable: bool,
    disabled: bool,
    error: string,
    id: string,
+   loading: bool,
    name: string,
+   onBlur: func,
    onChange: func,
    onFocus: func,
    placeholder: string,
    ref: oneOfType([func, shape({ current: any })]),
+   seconds: bool,
+   size: oneOf(['sm', 'md', 'lg']),
    value: any,
 };
 export default TimeInput;

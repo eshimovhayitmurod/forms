@@ -106,9 +106,11 @@ const DateInput = memo(
 DateInput.propTypes = {
    'aria-label': string,
    'data-cy': string,
+   clearable: bool,
    disabled: bool,
    error: string,
    id: string,
+   loading: bool,
    maxDate: string,
    minDate: string,
    name: string,
