@@ -8,7 +8,7 @@ import {
    shape,
    string,
 } from 'prop-types';
-import { memo } from 'react';
+import { memo, useId, useRef } from 'react';
 import {
    containerClass,
    textareaClass,
@@ -28,10 +28,13 @@ const Textarea = memo(
       onChange,
       onFocus,
       placeholder = '',
-      ref,
+      ref: innerRef,
       size = 'md',
       value = '',
    }) => {
+      const errorId = useId();
+      const ref = useRef(null);
+      const currentRef = innerRef ? innerRef : ref;
       const classNameOptions = {
          error: !!error,
          size,
@@ -40,6 +43,8 @@ const Textarea = memo(
          <div className={containerClass(classNameOptions)}>
             <div className={textareaContainerClass(classNameOptions)}>
                <textarea
+                  aria-describedby={error ? errorId : undefined}
+                  aria-invalid={!!error}
                   aria-label={ariaLabel}
                   className={textareaClass(classNameOptions)}
                   data-cy={dataCY}
@@ -51,11 +56,11 @@ const Textarea = memo(
                   onChange={event => onChange(event.target.value, { event })}
                   onFocus={onFocus}
                   placeholder={placeholder}
-                  ref={ref}
+                  ref={currentRef}
                   value={value}
                />
             </div>
-            <ErrorMessage size={size} error={error} />
+            <ErrorMessage size={size} id={errorId} error={error} />
          </div>
       );
    },

@@ -8,7 +8,7 @@ import {
    shape,
    string,
 } from 'prop-types';
-import { memo, useCallback, useMemo, useRef } from 'react';
+import { memo, useCallback, useId, useMemo, useRef } from 'react';
 import {
    containerClass,
    inputClass,
@@ -41,6 +41,7 @@ const NumberInput = memo(
       size = 'md',
       value = '',
    }) => {
+      const errorId = useId();
       const ref = useRef(null);
       const currentRef = innerRef ? innerRef : ref;
       const hasSuffix = useMemo(
@@ -83,6 +84,8 @@ const NumberInput = memo(
          <div className={containerClass(classNameOptions)}>
             <div className={inputContainerClass(classNameOptions)}>
                <input
+                  aria-describedby={error ? errorId : undefined}
+                  aria-invalid={!!error}
                   aria-label={ariaLabel}
                   className={inputClass(classNameOptions)}
                   data-cy={dataCY}
@@ -108,7 +111,7 @@ const NumberInput = memo(
                   </div>
                )}
             </div>
-            <ErrorMessage size={size} error={error} />
+            <ErrorMessage size={size} id={errorId} error={error} />
          </div>
       );
    },

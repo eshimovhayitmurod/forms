@@ -156,9 +156,12 @@ export const dropdownContainerClass = ({
       'has-[:disabled]:bg-(--color-input-disabled-bg-color)',
 
       'border-(--color-input-border-color)',
-      { 'border-(--color-input-border-error-color)': error && !disabled },
-      { 'hover:border-(--color-input-border-focus-color)': !disabled },
-      'focus-within:border-(--color-input-border-focus-color)',
+      {
+         'hover:border-(--color-input-border-focus-color)': !error && !disabled,
+         'border-(--color-input-border-error-color)': error,
+         'focus-within:border-(--color-input-border-focus-color)':
+            !error && !disabled,
+      },
 
       {
          'h-11 rounded-[10px]': !size || size === 'md',

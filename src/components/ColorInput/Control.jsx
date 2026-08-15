@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useId, useMemo } from 'react';
 import { IMaskInput } from 'react-imask';
 import {
    containerClass,
@@ -28,6 +28,7 @@ const Control = ({
    size = 'md',
    value,
 }) => {
+   const errorId = useId();
    const hasSuffix = useMemo(
       () => !!loading || (!!clearable && !disabled && value),
       [loading, clearable, disabled, value],
@@ -47,6 +48,8 @@ const Control = ({
             ref={node => refs?.setReference(node)}
          >
             <IMaskInput
+               aria-describedby={error ? errorId : undefined}
+               aria-invalid={!!error}
                aria-label={ariaLabel}
                className={dropdownInputClass(classNameOptions)}
                definitions={{ H: /[0-9a-fA-F]/ }}
@@ -99,7 +102,7 @@ const Control = ({
                </div>
             </div>
          </div>
-         <ErrorMessage size={size} error={error} />
+         <ErrorMessage size={size} id={errorId} error={error} />
       </div>
    );
 };

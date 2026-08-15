@@ -1,5 +1,5 @@
 import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
-import { memo, useMemo, useRef, useState } from 'react';
+import { memo, useId, useMemo, useRef, useState } from 'react';
 import {
    containerClass,
    dropdownContainerClass,
@@ -30,9 +30,10 @@ const PasswordInput = memo(
       size = 'md',
       value = '',
    }) => {
-      const [type, setType] = useState(false);
+      const errorId = useId();
       const ref = useRef(null);
       const currentRef = innerRef ? innerRef : ref;
+      const [type, setType] = useState(false);
       const hasSuffix = useMemo(
          () => !!loading || (!!clearable && !disabled && value),
          [loading, clearable, disabled, value],
@@ -49,6 +50,8 @@ const PasswordInput = memo(
          <div className={containerClass(classNameOptions)}>
             <div className={dropdownContainerClass(classNameOptions)}>
                <input
+                  aria-describedby={error ? errorId : undefined}
+                  aria-invalid={!!error}
                   aria-label={ariaLabel}
                   className={dropdownInputClass(classNameOptions)}
                   data-cy={dataCY}
@@ -87,7 +90,7 @@ const PasswordInput = memo(
                   </button>
                </div>
             </div>
-            <ErrorMessage size={size} error={error} />
+            <ErrorMessage size={size} id={errorId} error={error} />
          </div>
       );
    },

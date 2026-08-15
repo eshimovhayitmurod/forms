@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useId, useMemo } from 'react';
 import { IMask, IMaskInput } from 'react-imask';
 import {
    containerClass,
@@ -14,10 +14,13 @@ import dateFormatter from '../helpers/dateFormatter';
 import Down from '../Icons/Down';
 const Control = ({
    ariaLabel,
+   clearable = false,
    dataCY,
    disabled = false,
    error = '',
    getReferenceProps,
+   id,
+   loading = false,
    max,
    min,
    name,
@@ -29,10 +32,8 @@ const Control = ({
    refs,
    size = 'md',
    value = '',
-   id,
-   clearable = false,
-   loading = false,
 }) => {
+   const errorId = useId();
    const hasSuffix = useMemo(
       () => !!loading || (!!clearable && !disabled && value),
       [loading, clearable, disabled, value],
@@ -57,6 +58,8 @@ const Control = ({
             ref={node => refs?.setReference(node)}
          >
             <IMaskInput
+               aria-describedby={error ? errorId : undefined}
+               aria-invalid={!!error}
                aria-label={ariaLabel}
                autofix={true}
                className={dropdownInputClass(classNameOptions)}
@@ -134,7 +137,7 @@ const Control = ({
                </div>
             </div>
          </div>
-         <ErrorMessage size={size} error={error} />
+         <ErrorMessage size={size} id={errorId} error={error} />
       </div>
    );
 };

@@ -1,5 +1,5 @@
 import { any, bool, func, oneOf, oneOfType, shape, string } from 'prop-types';
-import { memo, useMemo, useRef } from 'react';
+import { memo, useId, useMemo, useRef } from 'react';
 import { IMaskInput } from 'react-imask';
 import {
    containerClass,
@@ -72,6 +72,7 @@ const MaskInput = memo(
       type = 'tin',
       value = '',
    }) => {
+      const errorId = useId();
       const ref = useRef(null);
       const currentRef = innerRef ? innerRef : ref;
       const hasSuffix = useMemo(
@@ -107,6 +108,8 @@ const MaskInput = memo(
          <div className={containerClass(classNameOptions)}>
             <div className={inputContainerClass(classNameOptions)}>
                <IMaskInput
+                  aria-describedby={error ? errorId : undefined}
+                  aria-invalid={!!error}
                   aria-label={ariaLabel}
                   className={inputClass(classNameOptions)}
                   data-cy={dataCY}
@@ -135,7 +138,7 @@ const MaskInput = memo(
                   </div>
                )}
             </div>
-            <ErrorMessage size={size} error={error} />
+            <ErrorMessage size={size} id={errorId} error={error} />
          </div>
       );
    },

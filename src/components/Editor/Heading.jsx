@@ -87,11 +87,9 @@ const Heading = ({ editor, disabled = false }) => {
                   <div
                      {...getFloatingProps()}
                      className='outline-none'
+                     ref={node => refs?.setFloating(node)}
                      style={floatingStyles}
                      tabIndex={-1}
-                     ref={node => {
-                        refs.setFloating(node);
-                     }}
                   >
                      <div
                         className='bg-[#ffffff] backdrop-blur-[5px] p-1 shadow-[0_0_20px_rgba(0,0,0,0.08)] rounded-[15px] overflow-hidden'

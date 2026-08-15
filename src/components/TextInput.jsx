@@ -8,7 +8,7 @@ import {
    shape,
    string,
 } from 'prop-types';
-import { memo, useMemo, useRef } from 'react';
+import { memo, useId, useMemo, useRef } from 'react';
 import {
    containerClass,
    inputClass,
@@ -37,6 +37,7 @@ const TextInput = memo(
       size = 'md',
       value = '',
    }) => {
+      const errorId = useId();
       const ref = useRef(null);
       const currentRef = innerRef ? innerRef : ref;
       const hasSuffix = useMemo(
@@ -54,6 +55,8 @@ const TextInput = memo(
          <div className={containerClass(classNameOptions)}>
             <div className={inputContainerClass(classNameOptions)}>
                <input
+                  aria-describedby={error ? errorId : undefined}
+                  aria-invalid={!!error}
                   aria-label={ariaLabel}
                   className={inputClass(classNameOptions)}
                   data-cy={dataCY}
@@ -79,7 +82,7 @@ const TextInput = memo(
                   </div>
                )}
             </div>
-            <ErrorMessage size={size} error={error} />
+            <ErrorMessage size={size} id={errorId} error={error} />
          </div>
       );
    },
